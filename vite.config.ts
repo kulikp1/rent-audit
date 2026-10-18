@@ -1,6 +1,9 @@
-import adapter from '@sveltejs/adapter-auto';
+import { paraglideVitePlugin } from '@inlang/paraglide-js';
+import tailwindcss from '@tailwindcss/vite';
+import { defineConfig } from 'vitest/config';
+import adapter from '@sveltejs/adapter-vercel';
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig, type Plugin } from 'vite';
+import { type Plugin } from 'vite';
 import pkg from './package.json' with { type: 'json' };
 
 function printProjectInfo(): Plugin {
@@ -9,7 +12,8 @@ function printProjectInfo(): Plugin {
 		configureServer(server) {
 			server.httpServer?.once('listening', () => {
 				const address = server.httpServer?.address();
-				const port = typeof address === 'object' && address ? address.port : server.config.server.port;
+				const port =
+					typeof address === 'object' && address ? address.port : server.config.server.port;
 				console.log(`\n  ${pkg.name}`);
 				console.log(`  ➜ Local: \x1b[34mhttp://localhost:${port}/\x1b[0m\n`);
 			});
@@ -27,9 +31,9 @@ function printProjectInfo(): Plugin {
 }
 
 export default defineConfig({
-	// Hide Vite's own banner and info logs; printProjectInfo prints what we need
 	logLevel: 'warn',
 	plugins: [
+		tailwindcss(),
 		printProjectInfo(),
 		sveltekit({
 			compilerOptions: {
@@ -37,11 +41,28 @@ export default defineConfig({
 				runes: ({ filename }) =>
 					filename.split(/[/\\]/).includes('node_modules') ? undefined : true
 			},
-
-			// adapter-auto only supports some environments, see https://svelte.dev/docs/kit/adapter-auto for a list.
-			// If your environment is not supported, or you settled on a specific environment, switch out the adapter.
-			// See https://svelte.dev/docs/kit/adapters for more information about adapters.
 			adapter: adapter()
+		}),
+
+		paraglideVitePlugin({
+			project: './project.inlang',
+			outdir: './src/lib/paraglide',
+			emitTsDeclarations: true,
+			strategy: ['cookie', 'preferredLanguage', 'baseLocale']
 		})
-	]
+	],
+	test: {
+		expect: { requireAssertions: true },
+		projects: [
+			{
+				extends: './vite.config.ts',
+				test: {
+					name: 'server',
+					environment: 'node',
+					include: ['src/**/*.{test,spec}.{js,ts}'],
+					exclude: ['src/**/*.svelte.{test,spec}.{js,ts}']
+				}
+			}
+		]
+	}
 });
