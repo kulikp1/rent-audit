@@ -11,17 +11,25 @@
 	import PageHeader from '#lib/components/ui/PageHeader.svelte';
 	import { errorTexts } from '#lib/i18n/errors.js';
 	import { postAction } from '#lib/utils/actions.js';
+	import type { TariffView } from '#lib/server/billing/tariffs.js';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
 
 	let addOpen = $state(false);
+	let editOpen = $state(false);
+	let editing = $state<TariffView | null>(null);
 
 	const sections = $derived([
 		{ service: 'electricity' as const, title: m.meter_electricity(), rows: data.electricity },
 		{ service: 'gas' as const, title: m.meter_gas(), rows: data.gas },
 		{ service: 'water' as const, title: m.meter_water(), rows: data.water }
 	]);
+
+	function startEdit(row: TariffView) {
+		editing = row;
+		editOpen = true;
+	}
 
 	async function remove(id: string) {
 		const confirmed = await dialog.confirm({
@@ -57,10 +65,11 @@
 			{#if section.rows.length === 0}
 				<p class="px-5 py-8 text-center text-sm text-ink-muted">{m.tariff_empty_hint()}</p>
 			{:else}
-				<div class="overflow-x-auto">
+				<div class="table-scroll">
 					<TariffTable
 						rows={section.rows}
 						service={section.service}
+						onedit={startEdit}
 						ondelete={(row) => remove(row.id)}
 					/>
 				</div>
@@ -81,3 +90,27 @@
 		<TariffFields services={['electricity', 'gas', 'water']} errors={errorTexts(errors)} />
 	{/snippet}
 </FormModal>
+
+{#if editing}
+	{#key editing.id}
+		<FormModal
+			bind:open={editOpen}
+			title={m.tariff_edit_title()}
+			description={new Date(editing.effectiveFrom).getTime() <= Date.now()
+				? m.tariff_edit_in_effect()
+				: m.tariff_add_text()}
+			action="?/edit"
+			onsuccess={() => toast.success(m.tariff_updated())}
+		>
+			{#snippet children({ errors })}
+				<input type="hidden" name="id" value={editing!.id} />
+				<TariffFields
+					services={[editing!.service]}
+					errors={errorTexts(errors)}
+					values={editing!}
+					lockDate={new Date(editing!.effectiveFrom).getTime() <= Date.now()}
+				/>
+			{/snippet}
+		</FormModal>
+	{/key}
+{/if}

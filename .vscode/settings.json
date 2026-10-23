@@ -1,5 +1,10 @@
 {
 	"files.associations": {
 		"*.css": "tailwindcss"
-	}
+	},
+	"github.copilot.chat.commitMessageGeneration.instructions": [
+		{
+			"text": "Write the commit message in English only. Use the Conventional Commits format (feat:, fix:, refactor:, docs:, chore:), a short imperative subject up to 72 characters, and no trailing period."
+		}
+	]
 }

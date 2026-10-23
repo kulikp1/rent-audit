@@ -19,6 +19,7 @@
 		Zap
 	} from '@lucide/svelte';
 	import { m } from '#lib/paraglide/messages.js';
+	import AnomalyReasons from '#lib/components/domain/AnomalyReasons.svelte';
 	import ApartmentFields from '#lib/components/domain/ApartmentFields.svelte';
 	import MeterFields from '#lib/components/domain/MeterFields.svelte';
 	import StatisticsView from '#lib/components/domain/StatisticsView.svelte';
@@ -41,6 +42,7 @@
 	import { errorTexts } from '#lib/i18n/errors.js';
 	import { postAction } from '#lib/utils/actions.js';
 	import { formatDate, formatMoney, formatPeriod, formatReading } from '#lib/utils/format.js';
+	import { serviceLabel, unitLabel } from '#lib/utils/invoice.js';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -208,6 +210,32 @@
 		</Menu>
 	</div>
 </div>
+
+{#if data.anomalies.length > 0}
+	<Card class="mb-6">
+		<h2 class="text-base font-semibold">{m.dashboard_anomalies_title()}</h2>
+		<div class="mt-4 divide-y divide-line">
+			{#each data.anomalies as item (item.service)}
+				<div class="py-4 first:pt-0 last:pb-0">
+					<div class="mb-2 flex flex-wrap items-center justify-between gap-2">
+						<p class="text-sm font-medium">{serviceLabel(item.service)}</p>
+						<a
+							href={pathTo(`/realtor/statistics?apartment=${item.apartmentId}`)}
+							class="text-[13px] font-medium text-primary-700 hover:underline"
+						>
+							{m.dashboard_anomalies_open()}
+						</a>
+					</div>
+					<AnomalyReasons
+						reasons={item.reasons}
+						unit={unitLabel(item.service === 'electricity' ? 'kwh' : 'm3')}
+						period={formatPeriod(item.period)}
+					/>
+				</div>
+			{/each}
+		</div>
+	</Card>
+{/if}
 
 <Tabs {tabs} active={data.tab} {base} />
 
@@ -403,7 +431,7 @@
 		</Button>
 	</div>
 	<Card padded={false}>
-		<div class="overflow-x-auto">
+		<div class="table-scroll">
 			<table class="w-full text-left text-sm">
 				<thead class="text-xs text-ink-muted uppercase">
 					<tr class="border-b border-line">
@@ -455,7 +483,7 @@
 		{#if data.readings.length === 0}
 			<EmptyState title={m.reading_empty_title()} text={m.reading_empty_text()} />
 		{:else}
-			<div class="overflow-x-auto">
+			<div class="table-scroll">
 				<table class="w-full text-left text-sm">
 					<thead class="text-xs text-ink-muted uppercase">
 						<tr class="border-b border-line">

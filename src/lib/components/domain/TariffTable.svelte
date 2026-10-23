@@ -1,18 +1,19 @@
 <script lang="ts">
-	import { Trash2 } from '@lucide/svelte';
+	import { Ellipsis, Pencil, Trash2 } from '@lucide/svelte';
 	import { m } from '#lib/paraglide/messages.js';
 	import type { TariffView } from '#lib/server/billing/tariffs.js';
 	import { formatDate, formatMoney } from '#lib/utils/format.js';
 	import Badge from '../ui/Badge.svelte';
-	import IconButton from '../ui/IconButton.svelte';
+	import Menu from '../overlay/Menu.svelte';
 
 	type Props = {
 		rows: TariffView[];
 		service: 'electricity' | 'gas' | 'water';
+		onedit?: (row: TariffView) => void;
 		ondelete?: (row: TariffView) => void;
 	};
 
-	let { rows, service, ondelete }: Props = $props();
+	let { rows, service, onedit, ondelete }: Props = $props();
 
 	const now = Date.now();
 	const current = $derived(
@@ -36,7 +37,7 @@
 				<th class="px-5 py-3 text-right font-medium">{m.tariff_price_night()}</th>
 			{/if}
 			<th class="px-5 py-3 font-medium">{m.apt_status()}</th>
-			{#if ondelete}<th class="w-14 px-3 py-3"></th>{/if}
+			{#if onedit || ondelete}<th class="w-14 px-3 py-3"></th>{/if}
 		</tr>
 	</thead>
 	<tbody class="divide-y divide-line">
@@ -61,13 +62,29 @@
 								: m.tariff_archive()}
 					</Badge>
 				</td>
-				{#if ondelete}
+				{#if onedit || ondelete}
 					<td class="px-3 py-3.5 text-right">
-						{#if status === 'planned'}
-							<IconButton label={m.common_delete()} tone="danger" onclick={() => ondelete(row)}>
-								<Trash2 class="size-4" />
-							</IconButton>
-						{/if}
+						<Menu
+							label={m.common_actions()}
+							triggerClass="grid size-9 place-items-center rounded-control text-ink-muted transition-colors hover:bg-surface-muted hover:text-ink"
+							items={[
+								...(onedit
+									? [{ label: m.common_edit(), icon: Pencil, onselect: () => onedit(row) }]
+									: []),
+								...(ondelete && status === 'planned'
+									? [
+											{
+												label: m.common_delete(),
+												icon: Trash2,
+												tone: 'danger' as const,
+												onselect: () => ondelete(row)
+											}
+										]
+									: [])
+							]}
+						>
+							{#snippet trigger()}<Ellipsis class="size-[18px]" />{/snippet}
+						</Menu>
 					</td>
 				{/if}
 			</tr>

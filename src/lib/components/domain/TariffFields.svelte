@@ -7,17 +7,24 @@
 	type Props = {
 		services: ('electricity' | 'gas' | 'water')[];
 		errors: Record<string, string>;
+		values?: { price: number; nightPrice: number | null; effectiveFrom: string };
+		lockDate?: boolean;
 	};
 
-	let { services, errors }: Props = $props();
+	let { services, errors, values, lockDate = false }: Props = $props();
 
 	let service = $state<string>('');
 	$effect(() => {
 		if (!service) service = services[0] ?? '';
 	});
 
-	const today = new Date();
-	const todayValue = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+	function dateValue(date: Date) {
+		return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+	}
+
+	const startValue = $derived(
+		values ? dateValue(new Date(values.effectiveFrom)) : dateValue(new Date())
+	);
 
 	const labels = $derived({
 		electricity: m.meter_electricity(),
@@ -46,7 +53,12 @@
 		required
 	>
 		{#snippet children(field)}
-			<Input name="price" inputmode="decimal" {...field} />
+			<Input
+				name="price"
+				inputmode="decimal"
+				defaultValue={values ? String(values.price) : undefined}
+				{...field}
+			/>
 		{/snippet}
 	</FormField>
 	{#if service === 'electricity'}
@@ -56,7 +68,12 @@
 			error={errors.nightPrice}
 		>
 			{#snippet children(field)}
-				<Input name="nightPrice" inputmode="decimal" {...field} />
+				<Input
+					name="nightPrice"
+					inputmode="decimal"
+					defaultValue={values?.nightPrice != null ? String(values.nightPrice) : undefined}
+					{...field}
+				/>
 			{/snippet}
 		</FormField>
 	{/if}
@@ -69,6 +86,12 @@
 	required
 >
 	{#snippet children(field)}
-		<Input name="effectiveFrom" type="date" defaultValue={todayValue} {...field} />
+		<Input
+			name="effectiveFrom"
+			type="date"
+			defaultValue={startValue}
+			disabled={lockDate}
+			{...field}
+		/>
 	{/snippet}
 </FormField>

@@ -49,6 +49,36 @@ export type DashboardAnomaly = {
 	reasons: AnomalyReason[];
 };
 
+function recentAnomalies(
+	apartment: Pick<ApartmentDoc, '_id' | 'name'>,
+	analysis: ApartmentAnalysis,
+	currentIndex: number
+): DashboardAnomaly[] {
+	const found: DashboardAnomaly[] = [];
+	for (const [service, points] of Object.entries(analysis) as [Service, AnalyzedPoint[]][]) {
+		const last = points[points.length - 1];
+		if (last && last.reasons.length > 0 && currentIndex - periodIndex(last.period) <= 2) {
+			found.push({
+				apartmentId: String(apartment._id),
+				apartmentName: apartment.name,
+				service,
+				period: last.period,
+				reasons: last.reasons
+			});
+		}
+	}
+	return found;
+}
+
+export async function apartmentAnomalies(
+	scope: Repo,
+	apartment: Pick<ApartmentDoc, '_id' | 'name' | 'residents'>,
+	now = new Date()
+): Promise<DashboardAnomaly[]> {
+	const analysis = await apartmentAnalysis(scope, apartment);
+	return recentAnomalies(apartment, analysis, now.getFullYear() * 12 + now.getMonth());
+}
+
 export async function dashboardAnomalies(
 	scope: Repo,
 	now = new Date()
@@ -57,21 +87,40 @@ export async function dashboardAnomalies(
 	const apartments = await scope.apartments.find().lean();
 	const found: DashboardAnomaly[] = [];
 	for (const apartment of apartments) {
+		found.push(
+			...recentAnomalies(apartment, await apartmentAnalysis(scope, apartment), currentIndex)
+		);
+	}
+	return found;
+}
+
+export type HistoryAnomaly = DashboardAnomaly & { recent: boolean };
+
+export async function allAnomalies(scope: Repo, now = new Date()): Promise<HistoryAnomaly[]> {
+	const currentIndex = now.getFullYear() * 12 + now.getMonth();
+	const apartments = await scope.apartments.find().lean();
+	const found: HistoryAnomaly[] = [];
+	for (const apartment of apartments) {
 		const analysis = await apartmentAnalysis(scope, apartment);
 		for (const [service, points] of Object.entries(analysis) as [Service, AnalyzedPoint[]][]) {
-			const last = points[points.length - 1];
-			if (last && last.reasons.length > 0 && currentIndex - periodIndex(last.period) <= 2) {
+			for (const point of points) {
+				if (point.reasons.length === 0) continue;
 				found.push({
 					apartmentId: String(apartment._id),
 					apartmentName: apartment.name,
 					service,
-					period: last.period,
-					reasons: last.reasons
+					period: point.period,
+					reasons: point.reasons,
+					recent: currentIndex - periodIndex(point.period) <= 2
 				});
 			}
 		}
 	}
-	return found;
+	return found.sort(
+		(left, right) =>
+			right.period.localeCompare(left.period) ||
+			left.apartmentName.localeCompare(right.apartmentName)
+	);
 }
 
 export async function checkReadingAnomaly(

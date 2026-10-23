@@ -25,7 +25,7 @@
 	{#if data.users.length === 0}
 		<p class="px-5 py-8 text-center text-sm text-ink-muted">{m.admin_users_empty()}</p>
 	{:else}
-		<div class="overflow-x-auto">
+		<div class="table-scroll">
 			<table class="w-full text-left text-sm">
 				<thead class="text-xs text-ink-muted uppercase">
 					<tr class="border-b border-line">

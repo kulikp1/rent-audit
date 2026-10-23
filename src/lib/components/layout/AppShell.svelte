@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { pathTo } from '#lib/utils/path.js';
 	import type { Snippet } from 'svelte';
+	import { onMount } from 'svelte';
 	import { page } from '$app/state';
-	import { LogOut, Menu as MenuIcon, X } from '@lucide/svelte';
+	import { LogOut, Menu as MenuIcon, Pin, X } from '@lucide/svelte';
 	import { m } from '#lib/paraglide/messages.js';
 	import type { NotificationView } from '#lib/server/notifications.js';
 	import Avatar from '../ui/Avatar.svelte';
@@ -34,8 +35,31 @@
 		children: Snippet;
 	} = $props();
 
+	const PIN_KEY = 'ra_sidebar_pinned';
+
 	let mobileOpen = $state(false);
+	let pinned = $state(false);
+	let hovered = $state(false);
 	let logoutForm = $state<HTMLFormElement>();
+
+	const expanded = $derived(pinned || hovered);
+
+	onMount(() => {
+		try {
+			pinned = localStorage.getItem(PIN_KEY) === '1';
+		} catch {
+			pinned = false;
+		}
+	});
+
+	function togglePin() {
+		pinned = !pinned;
+		try {
+			localStorage.setItem(PIN_KEY, pinned ? '1' : '0');
+		} catch {
+			return;
+		}
+	}
 
 	const items = $derived(navByRole[user.role]);
 	const roleLabel = $derived(
@@ -54,7 +78,7 @@
 
 <svelte:window onkeydown={handleWindowKeydown} />
 
-<div class="min-h-dvh lg:pl-64">
+<div class="min-h-dvh transition-[padding] duration-200 {pinned ? 'lg:pl-64' : 'lg:pl-16'}">
 	{#if mobileOpen}
 		<button
 			type="button"
@@ -65,12 +89,30 @@
 	{/if}
 
 	<aside
-		class="fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r border-line bg-surface transition-transform duration-200 lg:translate-x-0 {mobileOpen
+		onmouseenter={() => (hovered = true)}
+		onmouseleave={() => (hovered = false)}
+		class="fixed inset-y-0 left-0 z-40 flex w-64 flex-col overflow-hidden border-r border-line bg-surface transition-[transform,width,box-shadow] duration-200 lg:translate-x-0 {expanded
+			? 'lg:w-64'
+			: 'lg:w-16'} {expanded && !pinned ? 'lg:shadow-pop' : ''} {mobileOpen
 			? 'translate-x-0'
 			: '-translate-x-full'}"
 	>
-		<div class="flex h-16 items-center justify-between px-5">
-			<a href={pathTo('/')} aria-label={m.app_name()}><Logo /></a>
+		<div class="flex h-16 items-center justify-between pr-3 pl-[15px]">
+			<a href={pathTo('/')} aria-label={m.app_name()}><Logo compact={!expanded} /></a>
+			{#if expanded}
+				<button
+					type="button"
+					class="hidden size-9 place-items-center rounded-control text-ink-muted hover:bg-surface-muted lg:grid {pinned
+						? 'text-primary-600'
+						: ''}"
+					aria-label={pinned ? m.sidebar_unpin() : m.sidebar_pin()}
+					aria-pressed={pinned}
+					title={pinned ? m.sidebar_unpin() : m.sidebar_pin()}
+					onclick={togglePin}
+				>
+					<Pin class="size-[18px] {pinned ? 'fill-current' : ''}" />
+				</button>
+			{/if}
 			<button
 				type="button"
 				class="grid size-9 place-items-center rounded-control text-ink-muted hover:bg-surface-muted lg:hidden"
@@ -88,15 +130,18 @@
 					href={pathTo(item.href)}
 					aria-current={active ? 'page' : undefined}
 					onclick={() => (mobileOpen = false)}
-					class="flex items-center gap-3 rounded-control px-3 py-2.5 text-sm font-medium transition-colors {active
+					title={expanded ? undefined : item.label()}
+					class="relative flex items-center gap-3 rounded-control px-3 py-2.5 text-sm font-medium whitespace-nowrap transition-colors {active
 						? 'bg-primary-50 text-primary-700'
 						: 'text-ink-soft hover:bg-surface-muted hover:text-ink'}"
 				>
 					<item.icon class="size-[18px] {active ? 'text-primary-600' : 'text-ink-faint'}" />
-					<span class="flex-1">{item.label()}</span>
+					<span class="flex-1 {expanded ? '' : 'lg:hidden'}">{item.label()}</span>
 					{#if item.badge && badges[item.badge]}
 						<span
-							class="grid min-w-5 place-items-center rounded-full bg-warning-600 px-1.5 text-[11px] font-semibold text-white"
+							class="grid min-w-5 place-items-center rounded-full bg-warning-600 px-1.5 text-[11px] font-semibold text-white {expanded
+								? ''
+								: 'lg:absolute lg:top-0.5 lg:left-6 lg:min-w-4 lg:px-1 lg:text-[10px]'}"
 						>
 							{badges[item.badge]}
 						</span>
@@ -108,7 +153,7 @@
 		<div class="border-t border-line p-3">
 			<div class="flex items-center gap-3 rounded-control px-2 py-2">
 				<Avatar name={user.name} src={user.picture} />
-				<div class="min-w-0">
+				<div class="min-w-0 {expanded ? '' : 'lg:hidden'}">
 					<p class="truncate text-sm font-medium text-ink">{user.name}</p>
 					<p class="truncate text-xs text-ink-muted">{roleLabel}</p>
 				</div>

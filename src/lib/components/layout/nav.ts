@@ -10,6 +10,7 @@ import {
 	ScanLine,
 	ScanSearch,
 	Settings,
+	TriangleAlert,
 	Users
 } from '@lucide/svelte';
 import type { Component } from 'svelte';
@@ -34,6 +35,7 @@ export const navByRole: Record<'realtor' | 'tenant' | 'admin', NavItem[]> = {
 			badge: 'pendingReadings'
 		},
 		{ href: '/realtor/invoices', label: () => m.nav_invoices(), icon: Receipt },
+		{ href: '/realtor/anomalies', label: () => m.nav_anomalies(), icon: TriangleAlert },
 		{ href: '/realtor/statistics', label: () => m.nav_statistics(), icon: ChartColumn },
 		{ href: '/realtor/tariffs', label: () => m.nav_tariffs(), icon: Percent },
 		{

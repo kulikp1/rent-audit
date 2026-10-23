@@ -16,6 +16,7 @@
 	import Select from '#lib/components/ui/Select.svelte';
 	import { errorTexts } from '#lib/i18n/errors.js';
 	import { formatMoney } from '#lib/utils/format.js';
+	import { rowLink } from '#lib/utils/row-link.js';
 	import { postAction } from '#lib/utils/actions.js';
 	import type { PageProps } from './$types';
 
@@ -122,7 +123,7 @@
 		{#if filtered.length === 0}
 			<p class="px-6 py-12 text-center text-sm text-ink-muted">{m.apt_nothing_found()}</p>
 		{:else}
-			<div class="hidden overflow-x-auto md:block">
+			<div class="table-scroll hidden md:block">
 				<table class="w-full text-left text-sm">
 					<thead class="text-xs text-ink-muted uppercase">
 						<tr class="border-b border-line">
@@ -135,7 +136,10 @@
 					</thead>
 					<tbody class="divide-y divide-line">
 						{#each filtered as apartment (apartment.id)}
-							<tr class="transition-colors hover:bg-surface-muted/60">
+							<tr
+								use:rowLink={`/realtor/apartments/${apartment.id}`}
+								class="cursor-pointer transition-colors hover:bg-surface-muted/60"
+							>
 								<td class="px-5 py-3.5">
 									<a
 										href={pathTo(`/realtor/apartments/${apartment.id}`)}

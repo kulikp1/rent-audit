@@ -426,5 +426,16 @@
 	"admin_users_role": "Роль",
 	"admin_users_apartments": "Квартири",
 	"admin_users_joined": "Реєстрація",
-	"admin_users_empty": "Користувачів ще немає"
+	"admin_users_empty": "Користувачів ще немає",
+	"sidebar_pin": "Закріпити меню",
+	"sidebar_unpin": "Відкріпити меню",
+	"tariff_edit_title": "Редагувати ціну",
+	"tariff_edit_in_effect": "Ціна вже діє, тому змінити можна лише її значення. Виставлені рахунки лишаються за старою ціною.",
+	"tariff_updated": "Ціну оновлено",
+	"nav_anomalies": "Аномалії",
+	"anomalies_subtitle": "Усі випадки незвичного споживання за весь час",
+	"anomalies_all_services": "Усі послуги",
+	"anomalies_recent": "Нещодавно",
+	"anomalies_empty_title": "Аномалій немає",
+	"anomalies_empty_text": "Коли споживання відрізнятиметься від звичного, тут з'являться записи."
 }

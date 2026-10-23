@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { m } from '#lib/paraglide/messages.js';
 
-	let { size = 'md', inverted = false }: { size?: 'md' | 'lg'; inverted?: boolean } = $props();
+	let {
+		size = 'md',
+		inverted = false,
+		compact = false
+	}: { size?: 'md' | 'lg'; inverted?: boolean; compact?: boolean } = $props();
 </script>
 
 <span class="inline-flex items-center gap-2.5">
@@ -23,9 +27,9 @@
 			<circle cx="12" cy="11.5" r="1.6" fill="var(--color-primary-600)" />
 		</svg>
 	</span>
-	<span
-		class="font-semibold tracking-tight {size === 'lg' ? 'text-xl' : 'text-[17px]'} {inverted
-			? 'text-white'
-			: 'text-ink'}">{m.app_name()}</span
-	>
+	{#if !compact}<span
+			class="font-semibold tracking-tight {size === 'lg' ? 'text-xl' : 'text-[17px]'} {inverted
+				? 'text-white'
+				: 'text-ink'}">{m.app_name()}</span
+		>{/if}
 </span>

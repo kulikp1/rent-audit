@@ -3,6 +3,7 @@ import { PUBLIC_APP_URL } from '$app/env/private';
 import { fieldErrors } from '#lib/schemas/errors.js';
 import { apartmentUpdateSchema } from '#lib/schemas/apartment.js';
 import { rentChangeSchema } from '#lib/schemas/rent.js';
+import { apartmentAnomalies } from '#lib/server/billing/anomaly-service.js';
 import { statsFor } from '#lib/server/billing/stats.js';
 import { notify } from '#lib/server/notifications.js';
 import { currentRent, rentHistoryViews } from '#lib/server/rent.js';
@@ -38,6 +39,7 @@ export const load: PageServerLoad = async ({ params, locals, url }) => {
 		}).lean(),
 		readingViews(scope, { apartmentId }, 60)
 	]);
+	const anomalies = await apartmentAnomalies(scope, apartment);
 	const tenant = lease
 		? await User.findById(lease.tenantId).select('name email picture').lean()
 		: null;
@@ -46,6 +48,7 @@ export const load: PageServerLoad = async ({ params, locals, url }) => {
 
 	return {
 		tab,
+		anomalies,
 		stats: tab === 'statistics' ? await statsFor(scope, apartment) : [],
 		rent: { current: currentRent(apartment), history: rentHistoryViews(apartment) },
 		apartment: {

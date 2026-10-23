@@ -15,7 +15,7 @@
 	let { invoice, editable = false, onremove }: Props = $props();
 </script>
 
-<div class="hidden overflow-x-auto md:block">
+<div class="table-scroll hidden md:block">
 	<table class="w-full text-left text-sm">
 		<thead class="text-xs text-ink-muted uppercase">
 			<tr class="border-b border-line">

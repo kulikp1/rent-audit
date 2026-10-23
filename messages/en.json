@@ -426,5 +426,16 @@
 	"admin_users_role": "Role",
 	"admin_users_apartments": "Apartments",
 	"admin_users_joined": "Joined",
-	"admin_users_empty": "No users yet"
+	"admin_users_empty": "No users yet",
+	"sidebar_pin": "Pin menu",
+	"sidebar_unpin": "Unpin menu",
+	"tariff_edit_title": "Edit price",
+	"tariff_edit_in_effect": "This price is already in effect, so only its value can be changed. Issued invoices keep the old price.",
+	"tariff_updated": "Price updated",
+	"nav_anomalies": "Anomalies",
+	"anomalies_subtitle": "Every case of unusual consumption over time",
+	"anomalies_all_services": "All services",
+	"anomalies_recent": "Recent",
+	"anomalies_empty_title": "No anomalies",
+	"anomalies_empty_text": "Entries appear here when consumption differs from the usual."
 }

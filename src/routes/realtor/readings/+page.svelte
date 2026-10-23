@@ -132,7 +132,7 @@
 		<div class="border-b border-line p-4">
 			<div class="w-60"><Select bind:value={apartment} options={apartmentOptions} /></div>
 		</div>
-		<div class="hidden overflow-x-auto md:block">
+		<div class="table-scroll hidden md:block">
 			<table class="w-full text-left text-sm">
 				<thead class="text-xs text-ink-muted uppercase">
 					<tr class="border-b border-line">
@@ -147,7 +147,12 @@
 				</thead>
 				<tbody class="divide-y divide-line">
 					{#each filtered as reading (reading.id)}
-						<tr class="transition-colors hover:bg-surface-muted/60">
+						<tr
+							class="cursor-pointer transition-colors hover:bg-surface-muted/60"
+							onclick={(event) => {
+								if (!(event.target as HTMLElement).closest('button, a')) open(reading.id);
+							}}
+						>
 							<td class="px-5 py-3.5 font-medium">{reading.apartmentName}</td>
 							<td class="px-5 py-3.5">{labels[reading.meterType]} · {reading.serial}</td>
 							<td class="px-5 py-3.5 whitespace-nowrap">{formatPeriod(reading.period)}</td>
