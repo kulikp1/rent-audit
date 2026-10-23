@@ -15,7 +15,7 @@
 	let { invoice, editable = false, onremove }: Props = $props();
 </script>
 
-<div class="overflow-x-auto">
+<div class="hidden overflow-x-auto md:block">
 	<table class="w-full text-left text-sm">
 		<thead class="text-xs text-ink-muted uppercase">
 			<tr class="border-b border-line">
@@ -68,4 +68,30 @@
 			</tr>
 		</tfoot>
 	</table>
+</div>
+
+<div class="md:hidden">
+	<ul class="divide-y divide-line">
+		{#each invoice.lines as line (line.id)}
+			<li class="flex items-start gap-3 px-4 py-3.5">
+				<div class="min-w-0 flex-1">
+					<p class="text-sm font-medium text-ink">{lineLabel(line)}</p>
+					<p class="mt-0.5 text-[13px] text-ink-muted tabular-nums">
+						{formatQuantity(line.quantity)}
+						{unitLabel(line.unit)} × {formatMoney(line.price)}
+					</p>
+				</div>
+				<p class="text-sm font-semibold whitespace-nowrap tabular-nums">{formatMoney(line.sum)}</p>
+				{#if editable && line.kind === 'manual'}
+					<IconButton label={m.common_delete()} tone="danger" onclick={() => onremove?.(line.id)}>
+						<X class="size-4" />
+					</IconButton>
+				{/if}
+			</li>
+		{/each}
+	</ul>
+	<div class="flex items-center justify-between border-t border-line-strong px-4 py-4">
+		<span class="text-sm font-medium text-ink-soft">{m.invoice_total()}</span>
+		<span class="text-lg font-semibold tabular-nums">{formatMoney(invoice.total)}</span>
+	</div>
 </div>

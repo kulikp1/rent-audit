@@ -24,7 +24,7 @@
 {#if status === 'cancelled'}
 	<p class="text-sm text-ink-muted">{m.invoice_status_cancelled()}</p>
 {:else}
-	<ol class="flex items-center gap-2 text-sm">
+	<ol class="flex flex-wrap items-center gap-x-2 gap-y-2 text-sm">
 		{#each steps as step, position (step.id)}
 			{@const done = position < index || (position === index && status === 'paid')}
 			{@const current = position === index && status !== 'paid'}

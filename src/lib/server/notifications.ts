@@ -15,7 +15,7 @@ export async function notify(
 	type: NotificationType,
 	payload: Record<string, string | number> = {},
 	dedupeKey?: string
-): Promise<void> {
+): Promise<boolean> {
 	await connectDb();
 	try {
 		await Notification.create({
@@ -24,8 +24,10 @@ export async function notify(
 			payload,
 			dedupeKey
 		});
+		return true;
 	} catch (error) {
 		if ((error as { code?: number }).code !== 11000) throw error;
+		return false;
 	}
 }
 

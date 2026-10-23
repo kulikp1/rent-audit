@@ -119,7 +119,7 @@
 	{disabled}
 	popovertarget={listId}
 	onkeydown={handleTriggerKeydown}
-	class="flex h-10 w-full items-center justify-between gap-2 rounded-control border bg-surface px-3 text-left text-sm shadow-sm transition-colors focus:ring-2 focus:outline-none disabled:cursor-not-allowed disabled:bg-surface-muted disabled:text-ink-muted {invalid
+	class="flex h-10 w-full items-center justify-between gap-2 rounded-control border bg-surface px-3 text-left text-base shadow-sm transition-colors focus:ring-2 focus:outline-none disabled:cursor-not-allowed disabled:bg-surface-muted disabled:text-ink-muted sm:text-sm {invalid
 		? 'border-danger-600 focus:ring-danger-600/20'
 		: 'border-line-strong focus:border-primary-500 focus:ring-primary-500/20'}"
 >

@@ -107,7 +107,7 @@
 		{#if filtered.length === 0}
 			<p class="px-6 py-12 text-center text-sm text-ink-muted">{m.apt_nothing_found()}</p>
 		{:else}
-			<div class="overflow-x-auto">
+			<div class="hidden overflow-x-auto md:block">
 				<table class="w-full text-left text-sm">
 					<thead class="text-xs text-ink-muted uppercase">
 						<tr class="border-b border-line">
@@ -152,6 +152,42 @@
 					</tbody>
 				</table>
 			</div>
+			<ul class="divide-y divide-line md:hidden">
+				{#each filtered as invoice (invoice.id)}
+					<li>
+						<a
+							href={pathTo(`/realtor/invoices/${invoice.id}`)}
+							class="block px-4 py-4 active:bg-surface-muted"
+						>
+							<span class="flex items-start justify-between gap-3">
+								<span class="min-w-0">
+									<span class="block font-medium text-ink">{invoice.number}</span>
+									<span class="mt-0.5 block text-[13px] text-ink-muted">
+										{typeLabel(invoice.type)} · {formatPeriod(invoice.period)}
+									</span>
+									<span class="block truncate text-[13px] text-ink-muted"
+										>{invoice.apartmentName}</span
+									>
+								</span>
+								<span class="text-base font-semibold whitespace-nowrap tabular-nums">
+									{formatMoney(invoice.total)}
+								</span>
+							</span>
+							<span class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
+								<Badge tone={statusTone(invoice.status)}>{statusLabel(invoice.status)}</Badge>
+								{#if invoice.status === 'issued' && invoice.dueDate}
+									<span class="text-[12px] text-ink-muted">
+										{m.invoice_due_until({ date: formatDate(invoice.dueDate) })}
+									</span>
+								{/if}
+								{#if invoice.tenantPaidAt && invoice.status !== 'paid'}
+									<span class="text-[12px] text-warning-700">{m.invoice_tenant_says_paid()}</span>
+								{/if}
+							</span>
+						</a>
+					</li>
+				{/each}
+			</ul>
 		{/if}
 	{/if}
 </Card>

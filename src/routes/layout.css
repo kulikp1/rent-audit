@@ -96,6 +96,10 @@
 		cursor: not-allowed;
 	}
 
+	.overflow-x-auto {
+		position: relative;
+	}
+
 	html {
 		font-family: var(--font-sans);
 		color: var(--color-ink);

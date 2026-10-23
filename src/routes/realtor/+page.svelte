@@ -45,16 +45,16 @@
 
 <PageHeader title={m.realtor_dashboard_title()} subtitle={m.realtor_dashboard_subtitle()} />
 
-<div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+<div class="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
 	{#each stats as stat (stat.label)}
 		<Card>
 			<div class="flex items-start justify-between gap-2">
-				<p class="min-h-10 text-sm text-ink-muted">{stat.label}</p>
+				<p class="min-h-10 text-[13px] leading-snug text-ink-muted sm:text-sm">{stat.label}</p>
 				<span class="grid size-9 place-items-center rounded-control {stat.tone}">
 					<stat.icon class="size-[18px]" />
 				</span>
 			</div>
-			<p class="mt-3 text-3xl font-semibold tracking-tight tabular-nums">{stat.value}</p>
+			<p class="mt-2 text-3xl font-semibold tracking-tight tabular-nums sm:mt-3">{stat.value}</p>
 		</Card>
 	{/each}
 </div>

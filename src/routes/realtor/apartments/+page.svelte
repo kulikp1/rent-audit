@@ -44,6 +44,19 @@
 		{ value: 'rented', label: m.status_rented() }
 	]);
 
+	function rowItems(apartment: (typeof data.apartments)[number]) {
+		return [
+			{ label: m.common_open(), icon: ExternalLink, href: `/realtor/apartments/${apartment.id}` },
+			{ label: m.common_edit(), icon: Pencil, onselect: () => startEdit(apartment) },
+			{
+				label: m.common_delete(),
+				icon: Trash2,
+				tone: 'danger' as const,
+				onselect: () => remove(apartment)
+			}
+		];
+	}
+
 	function startEdit(apartment: (typeof data.apartments)[number]) {
 		editing = apartment;
 		editOpen = true;
@@ -109,7 +122,7 @@
 		{#if filtered.length === 0}
 			<p class="px-6 py-12 text-center text-sm text-ink-muted">{m.apt_nothing_found()}</p>
 		{:else}
-			<div class="overflow-x-auto">
+			<div class="hidden overflow-x-auto md:block">
 				<table class="w-full text-left text-sm">
 					<thead class="text-xs text-ink-muted uppercase">
 						<tr class="border-b border-line">
@@ -149,24 +162,7 @@
 									<Menu
 										label={m.common_actions()}
 										triggerClass="grid size-9 place-items-center rounded-control text-ink-muted transition-colors hover:bg-surface-muted hover:text-ink"
-										items={[
-											{
-												label: m.common_open(),
-												icon: ExternalLink,
-												href: `/realtor/apartments/${apartment.id}`
-											},
-											{
-												label: m.common_edit(),
-												icon: Pencil,
-												onselect: () => startEdit(apartment)
-											},
-											{
-												label: m.common_delete(),
-												icon: Trash2,
-												tone: 'danger',
-												onselect: () => remove(apartment)
-											}
-										]}
+										items={rowItems(apartment)}
 									>
 										{#snippet trigger()}<Ellipsis class="size-[18px]" />{/snippet}
 									</Menu>
@@ -176,6 +172,38 @@
 					</tbody>
 				</table>
 			</div>
+			<ul class="divide-y divide-line md:hidden">
+				{#each filtered as apartment (apartment.id)}
+					<li class="flex items-start gap-2 p-4">
+						<a href={pathTo(`/realtor/apartments/${apartment.id}`)} class="min-w-0 flex-1">
+							<span class="block font-medium text-ink">{apartment.name}</span>
+							{#if apartment.address}
+								<span class="mt-0.5 block truncate text-[13px] text-ink-muted"
+									>{apartment.address}</span
+								>
+							{/if}
+							<span class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5">
+								<Badge tone={apartment.status === 'rented' ? 'success' : 'neutral'}>
+									{apartment.status === 'rented' ? m.status_rented() : m.status_free()}
+								</Badge>
+								<span class="text-sm text-ink-soft"
+									>{apartment.tenantName ?? m.apt_no_tenant()}</span
+								>
+							</span>
+							<span class="mt-2 block text-base font-semibold tabular-nums">
+								{formatMoney(apartment.rentAmount)}
+							</span>
+						</a>
+						<Menu
+							label={m.common_actions()}
+							triggerClass="grid size-10 shrink-0 place-items-center rounded-control text-ink-muted transition-colors hover:bg-surface-muted hover:text-ink"
+							items={rowItems(apartment)}
+						>
+							{#snippet trigger()}<Ellipsis class="size-[18px]" />{/snippet}
+						</Menu>
+					</li>
+				{/each}
+			</ul>
 		{/if}
 	</Card>
 {/if}

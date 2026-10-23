@@ -13,7 +13,10 @@
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
 		"test:unit": "vitest",
-		"test": "npm run test:unit -- --run"
+		"test": "npm run test:unit -- --run",
+		"seed": "node --env-file=.env scripts/seed-demo.mjs",
+		"experiment:anomalies": "node scripts/anomaly-experiment.mjs",
+		"experiment:recognition": "node --env-file=.env scripts/recognition-experiment.mjs"
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",

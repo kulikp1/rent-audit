@@ -9,7 +9,9 @@
 </script>
 
 <div
-	class="rounded-card border border-line bg-surface shadow-card {padded ? 'p-5' : ''} {className}"
+	class="min-w-0 rounded-card border border-line bg-surface shadow-card {padded
+		? 'p-5'
+		: ''} {className}"
 >
 	{@render children()}
 </div>

@@ -25,7 +25,14 @@ const notificationSchema = new Schema(
 );
 
 notificationSchema.index({ userId: 1, createdAt: -1 });
-notificationSchema.index({ userId: 1, dedupeKey: 1 }, { unique: true, sparse: true });
+notificationSchema.index(
+	{ userId: 1, dedupeKey: 1 },
+	{
+		unique: true,
+		name: 'user_dedupe_unique',
+		partialFilterExpression: { dedupeKey: { $type: 'string' } }
+	}
+);
 
 export type NotificationDoc = InferSchemaType<typeof notificationSchema> & {
 	_id: mongoose.Types.ObjectId;

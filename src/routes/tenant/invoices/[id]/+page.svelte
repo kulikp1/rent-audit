@@ -78,7 +78,7 @@
 	</p>
 {/if}
 
-<div class="grid gap-6 lg:grid-cols-[1.6fr_1fr]">
+<div class="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[1.6fr_1fr]">
 	<Card padded={false}><InvoiceLinesTable {invoice} /></Card>
 
 	<div class="space-y-6">

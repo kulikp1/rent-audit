@@ -1,0 +1,7 @@
+{
+	"crons": [
+		{ "path": "/api/cron/rent-invoices", "schedule": "0 5 * * *" },
+		{ "path": "/api/cron/reminders", "schedule": "10 5 * * *" },
+		{ "path": "/api/cron/overdue", "schedule": "20 5 * * *" }
+	]
+}

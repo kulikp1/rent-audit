@@ -9,7 +9,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 	const [apartments, pendingReadings, unpaidInvoices] = await Promise.all([
 		scope.apartments.count(),
 		scope.readings.count({ status: 'needs_confirmation' }),
-		scope.invoices.count({ status: 'issued' })
+		scope.invoices.count({ status: { $in: ['issued', 'overdue'] } })
 	]);
 	const anomalies = await dashboardAnomalies(scope);
 	return {

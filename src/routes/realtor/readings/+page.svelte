@@ -132,7 +132,7 @@
 		<div class="border-b border-line p-4">
 			<div class="w-60"><Select bind:value={apartment} options={apartmentOptions} /></div>
 		</div>
-		<div class="overflow-x-auto">
+		<div class="hidden overflow-x-auto md:block">
 			<table class="w-full text-left text-sm">
 				<thead class="text-xs text-ink-muted uppercase">
 					<tr class="border-b border-line">
@@ -174,6 +174,34 @@
 				</tbody>
 			</table>
 		</div>
+		<ul class="divide-y divide-line md:hidden">
+			{#each filtered as reading (reading.id)}
+				<li class="p-4">
+					<div class="flex items-start justify-between gap-3">
+						<div class="min-w-0">
+							<p class="font-medium text-ink">{reading.apartmentName}</p>
+							<p class="mt-0.5 text-[13px] text-ink-muted">
+								{labels[reading.meterType]} · {reading.serial} · {formatPeriod(reading.period)}
+							</p>
+						</div>
+						<Badge tone={statusTone(reading.status)}>{statusText(reading.status)}</Badge>
+					</div>
+					<div class="mt-3 flex items-end justify-between gap-3">
+						<div class="text-sm tabular-nums">
+							<span class="text-lg font-semibold">{formatReading(reading.values)}</span>
+							<span class="ml-2 text-ink-muted">{formatReading(reading.previous)}</span>
+						</div>
+						<Button
+							size="sm"
+							variant={reading.status === 'needs_confirmation' ? 'primary' : 'secondary'}
+							onclick={() => open(reading.id)}
+						>
+							{reading.status === 'needs_confirmation' ? m.reading_review() : m.common_open()}
+						</Button>
+					</div>
+				</li>
+			{/each}
+		</ul>
 	{/if}
 </Card>
 

@@ -76,9 +76,13 @@
 			/>
 		{/each}
 
-		<div class="flex justify-end gap-2 pt-2">
-			<Button variant="secondary" href="/tenant">{m.common_cancel()}</Button>
-			<Button type="submit" loading={submitting}>{m.tenant_readings_send()}</Button>
+		<div class="flex flex-col-reverse gap-2 pt-2 sm:flex-row sm:justify-end">
+			<Button variant="secondary" href="/tenant" class="w-full sm:w-auto"
+				>{m.common_cancel()}</Button
+			>
+			<Button type="submit" loading={submitting} class="w-full sm:w-auto">
+				{m.tenant_readings_send()}
+			</Button>
 		</div>
 	</form>
 {/if}

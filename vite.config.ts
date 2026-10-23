@@ -41,7 +41,28 @@ export default defineConfig({
 				runes: ({ filename }) =>
 					filename.split(/[/\\]/).includes('node_modules') ? undefined : true
 			},
-			adapter: adapter()
+			adapter: adapter(),
+			csp: {
+				mode: 'auto',
+				directives: {
+					'default-src': ['self'],
+					'script-src': ['self'],
+					'style-src': ['self', 'unsafe-inline'],
+					'img-src': [
+						'self',
+						'data:',
+						'blob:',
+						'https://api.cloudinary.com',
+						'https://lh3.googleusercontent.com'
+					],
+					'font-src': ['self', 'data:'],
+					'connect-src': ['self', 'https://api.cloudinary.com'],
+					'form-action': ['self'],
+					'frame-ancestors': ['none'],
+					'base-uri': ['self'],
+					'object-src': ['none']
+				}
+			}
 		}),
 
 		paraglideVitePlugin({

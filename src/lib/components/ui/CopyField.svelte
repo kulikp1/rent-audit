@@ -21,7 +21,7 @@
 		{value}
 		aria-label={label}
 		onfocus={(event) => event.currentTarget.select()}
-		class="h-10 min-w-0 flex-1 rounded-control border border-line-strong bg-surface-muted px-3 text-sm text-ink-soft focus:ring-2 focus:ring-primary-500/20 focus:outline-none"
+		class="h-10 min-w-0 flex-1 rounded-control border border-line-strong bg-surface-muted px-3 text-base text-ink-soft focus:ring-2 focus:ring-primary-500/20 focus:outline-none sm:text-sm"
 	/>
 	<button
 		type="button"

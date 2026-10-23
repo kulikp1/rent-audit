@@ -1,4 +1,4 @@
-import type { Types } from 'mongoose';
+import type { HydratedDocument, Types } from 'mongoose';
 import { Counter, Invoice, type InvoiceDoc } from '../models/invoice';
 import type { LeaseDoc } from '../models/lease';
 import type { ApartmentDoc } from '../models/apartment';
@@ -105,7 +105,8 @@ export type CreateError =
 	| { code: 'missing_tariff'; service: string }
 	| { code: 'negative_consumption'; serial: string };
 
-export type CreateResult = { ok: true; invoice: InvoiceDoc } | { ok: false; error: CreateError };
+export type CreateResult =
+	{ ok: true; invoice: HydratedDocument<InvoiceDoc> } | { ok: false; error: CreateError };
 
 async function hasLiveInvoice(
 	scope: Repo,
@@ -238,7 +239,7 @@ export async function createRentInvoice(
 export type IssueError = 'no_payout' | 'empty';
 
 export async function issueInvoice(
-	invoice: InvoiceDoc & { save: () => Promise<unknown> },
+	invoice: HydratedDocument<InvoiceDoc>,
 	realtorId: Types.ObjectId
 ): Promise<{ ok: true } | { ok: false; error: IssueError }> {
 	if (invoice.lines.length === 0) return { ok: false, error: 'empty' };

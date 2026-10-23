@@ -50,7 +50,7 @@
 				bind:value={reason}
 				rows="3"
 				data-autofocus
-				class="mt-1.5 w-full rounded-control border-line-strong text-sm focus:border-primary-500 focus:ring-primary-500"
+				class="mt-1.5 w-full rounded-control border-line-strong text-base focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
 			></textarea>
 		{/if}
 		{#snippet footer()}

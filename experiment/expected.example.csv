@@ -1,0 +1,4 @@
+file,condition,type,serial,digits,previous,expected
+water-01.jpg,normal,water,W-123456,5,100.5,123.456
+power-01.jpg,glare,electricity,E-777,5,2000|1000,2100|1150
+gas-01.jpg,dark,gas,G-555,5,,4521.3

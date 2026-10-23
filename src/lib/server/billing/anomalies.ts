@@ -83,11 +83,18 @@ export function analyzePoint(
 		});
 	}
 
+	const sameMonthLastYear =
+		history.length >= YEAR_HISTORY
+			? history.find((item) => periodIndex(item.period) === periodIndex(point.period) - 12)
+			: undefined;
+	const matchesLastYear =
+		!!sameMonthLastYear && point.value <= sameMonthLastYear.value * HIGH_RATIO + minimum;
+
 	const recent = history.slice(-MAX_HISTORY_FOR_MEDIAN);
 	if (recent.length >= MIN_HISTORY_FOR_MEDIAN) {
 		const expected = median(recent.map((item) => item.value));
 		if (point.value > expected * HIGH_RATIO && point.value - expected > minimum) {
-			reasons.push({ code: 'above_median', value: point.value, expected });
+			if (!matchesLastYear) reasons.push({ code: 'above_median', value: point.value, expected });
 		} else if (
 			point.value > 0 &&
 			point.value < expected * LOW_RATIO &&
@@ -108,17 +115,16 @@ export function analyzePoint(
 		}
 	}
 
-	if (history.length >= YEAR_HISTORY) {
-		const sameMonth = history.find(
-			(item) => periodIndex(item.period) === periodIndex(point.period) - 12
-		);
-		if (
-			sameMonth &&
-			point.value > sameMonth.value * HIGH_RATIO &&
-			point.value - sameMonth.value > minimum
-		) {
-			reasons.push({ code: 'above_last_year', value: point.value, expected: sameMonth.value });
-		}
+	if (
+		sameMonthLastYear &&
+		point.value > sameMonthLastYear.value * HIGH_RATIO &&
+		point.value - sameMonthLastYear.value > minimum
+	) {
+		reasons.push({
+			code: 'above_last_year',
+			value: point.value,
+			expected: sameMonthLastYear.value
+		});
 	}
 
 	const norm = normPerResident[context.service] * Math.max(1, context.residents);

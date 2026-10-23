@@ -39,7 +39,7 @@
 			{#snippet icon()}<History class="size-6" />{/snippet}
 		</EmptyState>
 	{:else}
-		<div class="overflow-x-auto">
+		<div class="hidden overflow-x-auto md:block">
 			<table class="w-full text-left text-sm">
 				<thead class="text-xs text-ink-muted uppercase">
 					<tr class="border-b border-line">
@@ -80,5 +80,38 @@
 				</tbody>
 			</table>
 		</div>
+		<ul class="divide-y divide-line md:hidden">
+			{#each data.readings as reading (reading.id)}
+				<li class="p-4">
+					<div class="flex items-start justify-between gap-3">
+						<div>
+							<p class="font-medium text-ink">{formatPeriod(reading.period)}</p>
+							<p class="mt-0.5 text-[13px] text-ink-muted">
+								{labels[reading.meterType]} · {reading.serial}
+							</p>
+						</div>
+						<span class="text-lg font-semibold tabular-nums">{formatReading(reading.values)}</span>
+					</div>
+					<div class="mt-2">
+						<Badge
+							tone={reading.status === 'confirmed'
+								? 'success'
+								: reading.status === 'rejected'
+									? 'danger'
+									: 'warning'}
+						>
+							{reading.status === 'confirmed'
+								? m.reading_confirmed()
+								: reading.status === 'rejected'
+									? m.reading_rejected()
+									: m.reading_needs_confirmation()}
+						</Badge>
+						{#if reading.rejectReason}
+							<p class="mt-1 text-[13px] text-ink-muted">{reading.rejectReason}</p>
+						{/if}
+					</div>
+				</li>
+			{/each}
+		</ul>
 	{/if}
 </Card>

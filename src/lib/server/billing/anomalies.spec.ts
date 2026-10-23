@@ -137,6 +137,22 @@ describe('analyzePoint', () => {
 		expect(reasons.map((reason) => reason.code)).toContain('above_last_year');
 	});
 
+	const gas = { service: 'gas' as const, residents: 4 };
+	const yearOfGas = series([25, 40, 55, 60, 50, 30, 20, 10, 8, 8, 9, 12], '2025-10');
+
+	it('does not flag a seasonal peak that matches the same month of last year', () => {
+		const point = { period: '2026-10', value: 28 };
+		expect(analyzePoint(point, yearOfGas.slice(-6), gas).map((reason) => reason.code)).toContain(
+			'above_median'
+		);
+		expect(analyzePoint(point, yearOfGas, gas)).toEqual([]);
+	});
+
+	it('still flags a spike far above the same month of last year', () => {
+		const reasons = analyzePoint({ period: '2026-10', value: 70 }, yearOfGas, gas);
+		expect(reasons.map((reason) => reason.code)).toEqual(['above_median', 'above_last_year']);
+	});
+
 	it('flags consumption above the per-resident norm', () => {
 		const reasons = analyzePoint({ period: '2026-01', value: 25 }, [], {
 			service: 'water',

@@ -57,7 +57,7 @@
 		{/if}
 	</Card>
 
-	<div class="grid gap-6 xl:grid-cols-2">
+	<div class="grid grid-cols-[minmax(0,1fr)] gap-6 xl:grid-cols-2">
 		<Card padded={false}>
 			<div class="border-b border-line px-5 py-4">
 				<h2 class="text-base font-semibold">{m.meter_electricity()}</h2>
