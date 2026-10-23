@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import mongoose from 'mongoose';
 
 const args = process.argv.slice(2);
@@ -9,7 +10,13 @@ const option = (name) => {
 
 const email = option('--email')?.trim().toLowerCase();
 const reset = flag('--reset');
-const { MONGODB_URI, MONGODB_DB } = process.env;
+const {
+	MONGODB_URI,
+	MONGODB_DB,
+	CLOUDINARY_CLOUD_NAME,
+	CLOUDINARY_API_KEY,
+	CLOUDINARY_API_SECRET
+} = process.env;
 
 if (!email) {
 	console.error('Usage: npm run seed -- --email <realtor google email> [--reset]');
@@ -151,7 +158,7 @@ const tenants = [
 		googleId: 'demo-tenant-1',
 		email: 'demo.tenant.1@example.invalid',
 		name: 'Олена Прикладна',
-		picture: '',
+		picture: 'https://randomuser.me/api/portraits/women/44.jpg',
 		role: 'tenant',
 		locale: 'uk',
 		demoSeed: true,
@@ -162,7 +169,7 @@ const tenants = [
 		googleId: 'demo-tenant-2',
 		email: 'demo.tenant.2@example.invalid',
 		name: 'Максим Тестовий',
-		picture: '',
+		picture: 'https://randomuser.me/api/portraits/men/32.jpg',
 		role: 'tenant',
 		locale: 'uk',
 		demoSeed: true,
@@ -374,6 +381,73 @@ for (const item of pendingReadings) {
 		...stamps()
 	});
 }
+const PHOTOS = {
+	electricity:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Kos-Kos_city-Electricity_meter-01ASD.jpg/1280px-Kos-Kos_city-Electricity_meter-01ASD.jpg',
+	water:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Two_blue_water_meters_on_a_matte_red_painted_brick_facade_with_pipes_in_Seoul.jpg/1280px-Two_blue_water_meters_on_a_matte_red_painted_brick_facade_with_pipes_in_Seoul.jpg',
+	gas: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Gas_meter_2.jpg/1280px-Gas_meter_2.jpg'
+};
+
+async function uploadPhoto(type, apartmentId) {
+	const source = await fetch(PHOTOS[type], { headers: { 'User-Agent': 'rent-audit-seed/1.0' } });
+	if (!source.ok) throw new Error(`download_${source.status}`);
+	const params = {
+		folder: `rent-audit/${apartmentId}`,
+		timestamp: Math.floor(Date.now() / 1000),
+		type: 'authenticated'
+	};
+	const signature = createHash('sha1')
+		.update(
+			Object.keys(params)
+				.sort()
+				.map((key) => `${key}=${params[key]}`)
+				.join('&') + CLOUDINARY_API_SECRET
+		)
+		.digest('hex');
+	const form = new FormData();
+	form.append(
+		'file',
+		new Blob([await source.arrayBuffer()], { type: 'image/jpeg' }),
+		`${type}.jpg`
+	);
+	for (const [key, value] of Object.entries({
+		...params,
+		api_key: CLOUDINARY_API_KEY,
+		signature
+	})) {
+		form.append(key, String(value));
+	}
+	const response = await fetch(
+		`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+		{ method: 'POST', body: form }
+	);
+	if (!response.ok) throw new Error(`upload_${response.status}`);
+	return (await response.json()).public_id;
+}
+
+if (CLOUDINARY_CLOUD_NAME && CLOUDINARY_API_KEY && CLOUDINARY_API_SECRET) {
+	const meterById = new Map(meters.map((item) => [String(item._id), item]));
+	const withPhoto = new Set();
+	for (const item of meters.filter((entry) => entry.active)) {
+		const own = readings.filter((entry) => String(entry.meterId) === String(item._id));
+		own.slice(-2).forEach((entry) => withPhoto.add(entry));
+	}
+	readings
+		.filter((entry) => entry.status === 'needs_confirmation')
+		.forEach((entry) => withPhoto.add(entry));
+	const cache = new Map();
+	for (const entry of withPhoto) {
+		const item = meterById.get(String(entry.meterId));
+		const key = `${item.type}:${entry.apartmentId}`;
+		if (!cache.has(key)) cache.set(key, uploadPhoto(item.type, entry.apartmentId));
+		entry.photoPublicId = await cache.get(key);
+	}
+	console.log(`Uploaded ${cache.size} meter photos to Cloudinary.`);
+} else {
+	console.log('Cloudinary is not configured, readings are created without photos.');
+}
+
 await db.collection('readings').insertMany(readings);
 
 let sequence = 0;
