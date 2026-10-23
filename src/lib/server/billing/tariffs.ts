@@ -21,21 +21,18 @@ export function toTariffView(doc: TariffDoc): TariffView {
 	};
 }
 
-export async function nationalTariffs(): Promise<TariffDoc[]> {
-	await connectDb();
-	return Tariff.find({ scope: 'national' }).sort({ effectiveFrom: -1 }).lean();
-}
-
 export async function localTariffs(realtorId: Types.ObjectId): Promise<TariffDoc[]> {
 	await connectDb();
-	return Tariff.find({ scope: 'local', realtorId }).sort({ effectiveFrom: -1 }).lean();
+	return Tariff.find({ realtorId }).sort({ effectiveFrom: -1 }).lean();
 }
 
 export async function priceLookup(realtorId: Types.ObjectId, at: Date): Promise<PriceLookup> {
-	const [national, local] = await Promise.all([nationalTariffs(), localTariffs(realtorId)]);
+	const rows = await localTariffs(realtorId);
 	return (service) => {
-		const rows = (service === 'water' ? local : national).filter((row) => row.service === service);
-		const row = tariffAt(rows, at);
+		const row = tariffAt(
+			rows.filter((item) => item.service === service),
+			at
+		);
 		return row ? { price: row.price, nightPrice: row.nightPrice ?? null } : null;
 	};
 }

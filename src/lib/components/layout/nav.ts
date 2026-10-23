@@ -9,7 +9,8 @@ import {
 	Receipt,
 	ScanLine,
 	ScanSearch,
-	Settings
+	Settings,
+	Users
 } from '@lucide/svelte';
 import type { Component } from 'svelte';
 import { m } from '#lib/paraglide/messages.js';
@@ -60,5 +61,5 @@ export const navByRole: Record<'realtor' | 'tenant' | 'admin', NavItem[]> = {
 			badge: 'notifications'
 		}
 	],
-	admin: [{ href: '/admin/tariffs', label: () => m.nav_tariffs(), icon: Percent }]
+	admin: [{ href: '/admin/users', label: () => m.admin_users_title(), icon: Users }]
 };

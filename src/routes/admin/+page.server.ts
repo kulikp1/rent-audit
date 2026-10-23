@@ -4,5 +4,5 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = ({ locals }) => {
 	requireRole(locals, 'admin');
-	redirect(302, '/admin/tariffs');
+	redirect(302, '/admin/users');
 };

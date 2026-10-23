@@ -103,34 +103,29 @@ const prices = {
 await db.collection('tariffs').insertMany([
 	{
 		demoSeed: true,
-		scope: 'local',
 		realtorId: realtor._id,
 		service: 'water',
 		price: prices.water.price,
 		effectiveFrom: monthDate(-12),
 		...stamps()
 	},
-	...((await db.collection('tariffs').countDocuments({ scope: 'national' })) === 0
-		? [
-				{
-					demoSeed: true,
-					scope: 'national',
-					service: 'electricity',
-					price: prices.electricity.price,
-					nightPrice: prices.electricity.night,
-					effectiveFrom: monthDate(-12),
-					...stamps()
-				},
-				{
-					demoSeed: true,
-					scope: 'national',
-					service: 'gas',
-					price: prices.gas.price,
-					effectiveFrom: monthDate(-12),
-					...stamps()
-				}
-			]
-		: [])
+	{
+		demoSeed: true,
+		realtorId: realtor._id,
+		service: 'gas',
+		price: prices.gas.price,
+		effectiveFrom: monthDate(-12),
+		...stamps()
+	},
+	{
+		demoSeed: true,
+		realtorId: realtor._id,
+		service: 'electricity',
+		price: prices.electricity.price,
+		nightPrice: prices.electricity.night,
+		effectiveFrom: monthDate(-12),
+		...stamps()
+	}
 ]);
 
 await db.collection('users').updateOne(

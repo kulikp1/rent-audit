@@ -17,6 +17,12 @@
 
 	let addOpen = $state(false);
 
+	const sections = $derived([
+		{ service: 'electricity' as const, title: m.meter_electricity(), rows: data.electricity },
+		{ service: 'gas' as const, title: m.meter_gas(), rows: data.gas },
+		{ service: 'water' as const, title: m.meter_water(), rows: data.water }
+	]);
+
 	async function remove(id: string) {
 		const confirmed = await dialog.confirm({
 			title: m.tariff_delete_title(),
@@ -37,63 +43,41 @@
 	{#snippet actions()}
 		<Button onclick={() => (addOpen = true)}>
 			{#snippet icon()}<Plus class="size-4" />{/snippet}
-			{m.tariff_add_water()}
+			{m.tariff_add()}
 		</Button>
 	{/snippet}
 </PageHeader>
 
 <div class="space-y-6">
-	<Card padded={false}>
-		<div class="border-b border-line px-5 py-4">
-			<h2 class="text-base font-semibold">{m.meter_water()}</h2>
-			<p class="mt-0.5 text-sm text-ink-muted">{m.tariff_local_text()}</p>
-		</div>
-		{#if data.water.length === 0}
-			<p class="px-5 py-8 text-center text-sm text-ink-muted">{m.tariff_water_empty()}</p>
-		{:else}
-			<div class="overflow-x-auto">
-				<TariffTable rows={data.water} service="water" ondelete={(row) => remove(row.id)} />
-			</div>
-		{/if}
-	</Card>
-
-	<div class="grid grid-cols-[minmax(0,1fr)] gap-6 xl:grid-cols-2">
+	{#each sections as section (section.service)}
 		<Card padded={false}>
 			<div class="border-b border-line px-5 py-4">
-				<h2 class="text-base font-semibold">{m.meter_electricity()}</h2>
-				<p class="mt-0.5 text-sm text-ink-muted">{m.tariff_national_text()}</p>
+				<h2 class="text-base font-semibold">{section.title}</h2>
 			</div>
-			{#if data.electricity.length === 0}
-				<p class="px-5 py-8 text-center text-sm text-ink-muted">{m.tariff_empty()}</p>
+			{#if section.rows.length === 0}
+				<p class="px-5 py-8 text-center text-sm text-ink-muted">{m.tariff_empty_hint()}</p>
 			{:else}
 				<div class="overflow-x-auto">
-					<TariffTable rows={data.electricity} service="electricity" />
+					<TariffTable
+						rows={section.rows}
+						service={section.service}
+						ondelete={(row) => remove(row.id)}
+					/>
 				</div>
 			{/if}
 		</Card>
-		<Card padded={false}>
-			<div class="border-b border-line px-5 py-4">
-				<h2 class="text-base font-semibold">{m.meter_gas()}</h2>
-				<p class="mt-0.5 text-sm text-ink-muted">{m.tariff_national_text()}</p>
-			</div>
-			{#if data.gas.length === 0}
-				<p class="px-5 py-8 text-center text-sm text-ink-muted">{m.tariff_empty()}</p>
-			{:else}
-				<div class="overflow-x-auto"><TariffTable rows={data.gas} service="gas" /></div>
-			{/if}
-		</Card>
-	</div>
+	{/each}
 </div>
 
 <FormModal
 	bind:open={addOpen}
-	title={m.tariff_add_water()}
+	title={m.tariff_add()}
 	description={m.tariff_add_text()}
 	action="?/add"
 	submitLabel={m.common_create()}
 	onsuccess={() => toast.success(m.tariff_added())}
 >
 	{#snippet children({ errors })}
-		<TariffFields services={['water']} errors={errorTexts(errors)} />
+		<TariffFields services={['electricity', 'gas', 'water']} errors={errorTexts(errors)} />
 	{/snippet}
 </FormModal>
