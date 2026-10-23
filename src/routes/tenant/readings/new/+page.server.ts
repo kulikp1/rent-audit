@@ -6,14 +6,16 @@ import { cloudinaryConfigured, publicIdBelongsTo } from '#lib/server/cloudinary.
 import { geminiConfigured } from '#lib/server/gemini.js';
 import { verifyRecognition, type RecognitionClaims } from '#lib/server/recognition-token.js';
 import { previousFor, submitReading } from '#lib/server/readings.js';
-import { requireTenantContext } from '#lib/server/tenant.js';
+import { requireTenantContext, tenantContext } from '#lib/server/tenant.js';
 import { fitsDigits } from '#lib/server/validation/reading.js';
 import { currentPeriod } from '#lib/utils/format.js';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const user = requireRole(locals, 'tenant');
-	const { lease, apartment, scope } = await requireTenantContext(user.id);
+	const context = await tenantContext(user.id);
+	if (!context) redirect(303, '/tenant');
+	const { lease, apartment, scope } = context;
 	const period = currentPeriod();
 	const [meters, existing] = await Promise.all([
 		scope.meters.find({ apartmentId: apartment._id, active: true }),

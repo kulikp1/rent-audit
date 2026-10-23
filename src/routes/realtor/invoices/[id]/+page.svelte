@@ -206,9 +206,18 @@
 {/if}
 
 <div class="grid grid-cols-[minmax(0,1fr)] items-start gap-6 lg:grid-cols-[1.6fr_1fr]">
-	<Card padded={false}>
-		<InvoiceLinesTable {invoice} editable={draft} onremove={removeLine} />
-	</Card>
+	<div class="space-y-6">
+		<Card padded={false}>
+			<InvoiceLinesTable {invoice} editable={draft} onremove={removeLine} />
+		</Card>
+
+		{#if invoice.payout}
+			<Card>
+				<h2 class="text-base font-semibold">{m.invoice_payment_details()}</h2>
+				<div class="mt-4"><PaymentDetails payout={invoice.payout} {purpose} /></div>
+			</Card>
+		{/if}
+	</div>
 
 	<div class="space-y-6">
 		<Card>
@@ -238,13 +247,6 @@
 				{/if}
 			</dl>
 		</Card>
-
-		{#if invoice.payout}
-			<Card>
-				<h2 class="text-base font-semibold">{m.invoice_payment_details()}</h2>
-				<div class="mt-4"><PaymentDetails payout={invoice.payout} {purpose} /></div>
-			</Card>
-		{/if}
 	</div>
 </div>
 

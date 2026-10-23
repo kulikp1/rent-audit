@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fitViewport } from '#lib/utils/fit.js';
 	import { pathTo } from '#lib/utils/path.js';
 	import { Receipt } from '@lucide/svelte';
 	import { m } from '#lib/paraglide/messages.js';
@@ -23,7 +24,7 @@
 			{#snippet icon()}<Receipt class="size-6" />{/snippet}
 		</EmptyState>
 	{:else}
-		<ul class="divide-y divide-line">
+		<ul class="table-scroll divide-y divide-line" use:fitViewport>
 			{#each data.invoices as invoice (invoice.id)}
 				<li>
 					<a

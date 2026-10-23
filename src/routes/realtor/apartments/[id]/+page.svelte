@@ -212,32 +212,6 @@
 	</div>
 </div>
 
-{#if data.anomalies.length > 0}
-	<Card class="mb-6">
-		<h2 class="text-base font-semibold">{m.dashboard_anomalies_title()}</h2>
-		<div class="mt-4 divide-y divide-line">
-			{#each data.anomalies as item (item.service)}
-				<div class="py-4 first:pt-0 last:pb-0">
-					<div class="mb-2 flex flex-wrap items-center justify-between gap-2">
-						<p class="text-sm font-medium">{serviceLabel(item.service)}</p>
-						<a
-							href={pathTo(`/realtor/statistics?apartment=${item.apartmentId}`)}
-							class="text-[13px] font-medium text-primary-700 hover:underline"
-						>
-							{m.dashboard_anomalies_open()}
-						</a>
-					</div>
-					<AnomalyReasons
-						reasons={item.reasons}
-						unit={unitLabel(item.service === 'electricity' ? 'kwh' : 'm3')}
-						period={formatPeriod(item.period)}
-					/>
-				</div>
-			{/each}
-		</div>
-	</Card>
-{/if}
-
 <Tabs {tabs} active={data.tab} {base} />
 
 {#if data.tab === 'overview'}
@@ -530,6 +504,32 @@
 				</table>
 			</div>
 		{/if}
+	</Card>
+{/if}
+
+{#if data.anomalies.length > 0}
+	<Card class="mt-6">
+		<h2 class="text-base font-semibold">{m.dashboard_anomalies_title()}</h2>
+		<div class="mt-4 divide-y divide-line">
+			{#each data.anomalies as item (item.service)}
+				<div class="py-4 first:pt-0 last:pb-0">
+					<div class="mb-2 flex flex-wrap items-center justify-between gap-2">
+						<p class="text-sm font-medium">{serviceLabel(item.service)}</p>
+						<a
+							href={pathTo(`/realtor/statistics?apartment=${item.apartmentId}`)}
+							class="text-[13px] font-medium text-primary-700 hover:underline"
+						>
+							{m.dashboard_anomalies_open()}
+						</a>
+					</div>
+					<AnomalyReasons
+						reasons={item.reasons}
+						unit={unitLabel(item.service === 'electricity' ? 'kwh' : 'm3')}
+						period={formatPeriod(item.period)}
+					/>
+				</div>
+			{/each}
+		</div>
 	</Card>
 {/if}
 

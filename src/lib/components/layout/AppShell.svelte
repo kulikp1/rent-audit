@@ -200,7 +200,7 @@
 
 	<form bind:this={logoutForm} method="POST" action="/auth/logout" class="hidden"></form>
 
-	<main class="mx-auto w-full max-w-6xl px-4 py-8 lg:px-8">
+	<main class="mx-auto w-full max-w-6xl px-4 py-6 lg:px-8">
 		{@render children()}
 	</main>
 </div>

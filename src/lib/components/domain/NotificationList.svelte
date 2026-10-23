@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fitViewportIf } from '#lib/utils/fit.js';
 	import { goto, invalidateAll } from '$app/navigation';
 	import { Bell, CircleAlert, CircleCheck, Info, TriangleAlert } from '@lucide/svelte';
 	import { m } from '#lib/paraglide/messages.js';
@@ -44,7 +45,7 @@
 		{#snippet icon()}<Bell class="size-6" />{/snippet}
 	</EmptyState>
 {:else}
-	<ul class="divide-y divide-line">
+	<ul class="divide-y divide-line {compact ? '' : 'table-scroll'}" use:fitViewportIf={!compact}>
 		{#each items as item (item.id)}
 			{@const info = describeNotification(item, role)}
 			{@const Icon = icons[info.tone]}
