@@ -38,7 +38,7 @@
 	<div class="mb-4 flex justify-end">
 		<div class="w-48"><Select bind:value={range} options={rangeOptions} /></div>
 	</div>
-	<div class="grid grid-cols-[minmax(0,1fr)] gap-6 xl:grid-cols-2">
+	<div class="grid grid-cols-[minmax(0,1fr)] items-start gap-6 xl:grid-cols-2">
 		{#each visible as item (item.service)}
 			{@const flagged = item.points.filter((point) => point.reasons.length > 0)}
 			<Card>

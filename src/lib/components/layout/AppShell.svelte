@@ -135,7 +135,7 @@
 						? 'bg-primary-50 text-primary-700'
 						: 'text-ink-soft hover:bg-surface-muted hover:text-ink'}"
 				>
-					<item.icon class="size-[18px] {active ? 'text-primary-600' : 'text-ink-faint'}" />
+					<item.icon class="size-[18px] shrink-0 {active ? 'text-primary-600' : 'text-ink-faint'}" />
 					<span class="flex-1 {expanded ? '' : 'lg:hidden'}">{item.label()}</span>
 					{#if item.badge && badges[item.badge]}
 						<span

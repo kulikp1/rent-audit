@@ -53,7 +53,7 @@
 		</div>
 	{/if}
 
-	<div class="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[1.4fr_1fr]">
+	<div class="grid grid-cols-[minmax(0,1fr)] items-start gap-6 lg:grid-cols-[1.4fr_1fr]">
 		<Card>
 			<div class="flex items-start justify-between gap-4">
 				<div>

@@ -10,7 +10,7 @@
 
 <span class="inline-flex items-center gap-2.5">
 	<span
-		class="grid place-items-center rounded-[10px] bg-primary-600 text-white shadow-sm {size === 'lg'
+		class="grid shrink-0 place-items-center rounded-[10px] bg-primary-600 text-white shadow-sm {size === 'lg'
 			? 'size-11'
 			: 'size-9'}"
 	>
