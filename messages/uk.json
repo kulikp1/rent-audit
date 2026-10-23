@@ -426,5 +426,7 @@
 	"admin_users_role": "Роль",
 	"admin_users_apartments": "Квартири",
 	"admin_users_joined": "Реєстрація",
-	"admin_users_empty": "Користувачів ще немає"
+	"admin_users_empty": "Користувачів ще немає",
+	"sidebar_pin": "Закріпити меню",
+	"sidebar_unpin": "Відкріпити меню"
 }

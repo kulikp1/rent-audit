@@ -426,5 +426,7 @@
 	"admin_users_role": "Role",
 	"admin_users_apartments": "Apartments",
 	"admin_users_joined": "Joined",
-	"admin_users_empty": "No users yet"
+	"admin_users_empty": "No users yet",
+	"sidebar_pin": "Pin menu",
+	"sidebar_unpin": "Unpin menu"
 }
