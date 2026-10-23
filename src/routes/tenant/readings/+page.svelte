@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fitViewport } from '#lib/utils/fit.js';
 	import { page } from '$app/state';
 	import { CircleCheck, History } from '@lucide/svelte';
 	import { m } from '#lib/paraglide/messages.js';
@@ -39,7 +40,7 @@
 			{#snippet icon()}<History class="size-6" />{/snippet}
 		</EmptyState>
 	{:else}
-		<div class="table-scroll hidden md:block">
+		<div class="table-scroll hidden md:block" use:fitViewport>
 			<table class="w-full text-left text-sm">
 				<thead class="text-xs text-ink-muted uppercase">
 					<tr class="border-b border-line">

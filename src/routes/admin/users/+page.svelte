@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fitViewport } from '#lib/utils/fit.js';
 	import { m } from '#lib/paraglide/messages.js';
 	import Avatar from '#lib/components/ui/Avatar.svelte';
 	import Badge from '#lib/components/ui/Badge.svelte';
@@ -25,7 +26,7 @@
 	{#if data.users.length === 0}
 		<p class="px-5 py-8 text-center text-sm text-ink-muted">{m.admin_users_empty()}</p>
 	{:else}
-		<div class="table-scroll">
+		<div class="table-scroll" use:fitViewport>
 			<table class="w-full text-left text-sm">
 				<thead class="text-xs text-ink-muted uppercase">
 					<tr class="border-b border-line">

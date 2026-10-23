@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fitViewport } from '#lib/utils/fit.js';
 	import { TriangleAlert } from '@lucide/svelte';
 	import { m } from '#lib/paraglide/messages.js';
 	import AnomalyReasons from '#lib/components/domain/AnomalyReasons.svelte';
@@ -54,7 +55,7 @@
 		{#if filtered.length === 0}
 			<p class="px-6 py-12 text-center text-sm text-ink-muted">{m.apt_nothing_found()}</p>
 		{:else}
-			<ul class="table-scroll divide-y divide-line">
+			<ul class="table-scroll divide-y divide-line" use:fitViewport>
 				{#each filtered as item (item.apartmentId + item.service + item.period)}
 					<li
 						use:rowLink={`/realtor/statistics?apartment=${item.apartmentId}`}

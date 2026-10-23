@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fitViewport } from '#lib/utils/fit.js';
 	import { resolve } from '$app/paths';
 	import { ScanSearch } from '@lucide/svelte';
 	import { m } from '#lib/paraglide/messages.js';
@@ -132,7 +133,7 @@
 		<div class="border-b border-line p-4">
 			<div class="w-60"><Select bind:value={apartment} options={apartmentOptions} /></div>
 		</div>
-		<div class="table-scroll hidden md:block">
+		<div class="table-scroll hidden md:block" use:fitViewport>
 			<table class="w-full text-left text-sm">
 				<thead class="text-xs text-ink-muted uppercase">
 					<tr class="border-b border-line">

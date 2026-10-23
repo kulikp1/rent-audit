@@ -131,11 +131,13 @@
 					aria-current={active ? 'page' : undefined}
 					onclick={() => (mobileOpen = false)}
 					title={expanded ? undefined : item.label()}
-					class="relative flex items-center gap-3 rounded-control px-3 py-2.5 text-sm font-medium whitespace-nowrap transition-colors {active
+					class="relative flex min-h-10 items-center gap-3 rounded-control px-3 py-2.5 text-sm font-medium whitespace-nowrap transition-colors {active
 						? 'bg-primary-50 text-primary-700'
 						: 'text-ink-soft hover:bg-surface-muted hover:text-ink'}"
 				>
-					<item.icon class="size-[18px] shrink-0 {active ? 'text-primary-600' : 'text-ink-faint'}" />
+					<item.icon
+						class="size-[18px] shrink-0 {active ? 'text-primary-600' : 'text-ink-faint'}"
+					/>
 					<span class="flex-1 {expanded ? '' : 'lg:hidden'}">{item.label()}</span>
 					{#if item.badge && badges[item.badge]}
 						<span

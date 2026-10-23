@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fitViewport } from '#lib/utils/fit.js';
 	import { pathTo } from '#lib/utils/path.js';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
@@ -431,7 +432,7 @@
 		</Button>
 	</div>
 	<Card padded={false}>
-		<div class="table-scroll">
+		<div class="table-scroll" use:fitViewport>
 			<table class="w-full text-left text-sm">
 				<thead class="text-xs text-ink-muted uppercase">
 					<tr class="border-b border-line">
@@ -483,7 +484,7 @@
 		{#if data.readings.length === 0}
 			<EmptyState title={m.reading_empty_title()} text={m.reading_empty_text()} />
 		{:else}
-			<div class="table-scroll">
+			<div class="table-scroll" use:fitViewport>
 				<table class="w-full text-left text-sm">
 					<thead class="text-xs text-ink-muted uppercase">
 						<tr class="border-b border-line">

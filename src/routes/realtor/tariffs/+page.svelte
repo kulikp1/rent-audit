@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fitViewport } from '#lib/utils/fit.js';
 	import { Plus } from '@lucide/svelte';
 	import { m } from '#lib/paraglide/messages.js';
 	import TariffFields from '#lib/components/domain/TariffFields.svelte';
@@ -65,7 +66,7 @@
 			{#if section.rows.length === 0}
 				<p class="px-5 py-8 text-center text-sm text-ink-muted">{m.tariff_empty_hint()}</p>
 			{:else}
-				<div class="table-scroll">
+				<div class="table-scroll" use:fitViewport>
 					<TariffTable
 						rows={section.rows}
 						service={section.service}

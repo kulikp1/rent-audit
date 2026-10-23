@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fitViewport } from '#lib/utils/fit.js';
 	import { pathTo } from '#lib/utils/path.js';
 	import { Building2, Ellipsis, ExternalLink, Pencil, Plus, Search, Trash2 } from '@lucide/svelte';
 	import { m } from '#lib/paraglide/messages.js';
@@ -123,7 +124,7 @@
 		{#if filtered.length === 0}
 			<p class="px-6 py-12 text-center text-sm text-ink-muted">{m.apt_nothing_found()}</p>
 		{:else}
-			<div class="table-scroll hidden md:block">
+			<div class="table-scroll hidden md:block" use:fitViewport>
 				<table class="w-full text-left text-sm">
 					<thead class="text-xs text-ink-muted uppercase">
 						<tr class="border-b border-line">
