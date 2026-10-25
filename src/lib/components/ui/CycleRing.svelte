@@ -11,19 +11,19 @@
 		{ title: m.login_cycle_invoice_title(), text: m.login_cycle_invoice_text() }
 	]);
 
-	let index = $state(0);
-	let wrapped = $state(false);
+	let progress = $state(0);
 
-	const progress = $derived(((index + 1) / steps.length) * 100);
+	const index = $derived(Math.min(steps.length - 1, Math.floor((progress / 100) * steps.length)));
 	const step = $derived(steps[index]!);
 
 	$effect(() => {
-		const timer = setInterval(() => {
-			const next = (index + 1) % steps.length;
-			wrapped = next === 0;
-			index = next;
-		}, INTERVAL_MS);
-		return () => clearInterval(timer);
+		const total = INTERVAL_MS * steps.length;
+		const start = performance.now();
+		let frame = requestAnimationFrame(function tick(now) {
+			progress = (((now - start) % total) / total) * 100;
+			frame = requestAnimationFrame(tick);
+		});
+		return () => cancelAnimationFrame(frame);
 	});
 </script>
 
@@ -59,16 +59,8 @@
 				stroke-linecap="round"
 				pathLength="100"
 				stroke-dasharray="{progress} 100"
-				class={wrapped
-					? 'transition-none'
-					: 'transition-[stroke-dasharray] duration-[900ms] ease-out'}
 			/>
-			<g
-				class="origin-center {wrapped
-					? 'transition-none'
-					: 'transition-transform duration-[900ms] ease-out'}"
-				style="transform-origin: 160px 160px; transform: rotate({progress * 3.6}deg)"
-			>
+			<g style="transform-origin: 160px 160px; transform: rotate({progress * 3.6}deg)">
 				<circle cx={160 + RADIUS} cy="160" r="15" fill="var(--color-primary-900)" opacity="0.9" />
 				<circle cx={160 + RADIUS} cy="160" r="7" fill="#fff" />
 			</g>
