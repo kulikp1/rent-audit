@@ -20,6 +20,10 @@
 	--font-onest: 'Onest Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
 	--font-tag: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, monospace;
 
+	--color-service-electricity: #e8b04a;
+	--color-service-gas: #f0734f;
+	--color-service-water: #5aaee0;
+
 	--color-night-950: #05060c;
 	--color-night-700: #1a1c2b;
 
