@@ -26,9 +26,18 @@
 		photos: boolean;
 		rejectReason?: string;
 		disabled?: boolean;
+		onready?: (ready: boolean) => void;
 	};
 
-	let { meter, previous, errors, photos, rejectReason = '', disabled = false }: Props = $props();
+	let {
+		meter,
+		previous,
+		errors,
+		photos,
+		rejectReason = '',
+		disabled = false,
+		onready
+	}: Props = $props();
 
 	let mode = $state<'choose' | 'busy' | 'result' | 'manual'>('choose');
 	let busyStep = $state<'upload' | 'recognize'>('upload');
@@ -58,6 +67,17 @@
 		if (recognized.flags.includes('type_mismatch')) texts.push(m.reading_flag_type_mismatch());
 		if (recognized.flags.includes('serial_mismatch')) texts.push(m.reading_flag_serial_mismatch());
 		return texts;
+	});
+
+	const ready = $derived(
+		showFields &&
+			Array.from({ length: meter.zones }, (_, zone) => (current[zone] ?? '').trim()).every(
+				(value) => value !== ''
+			)
+	);
+
+	$effect(() => {
+		onready?.(ready);
 	});
 
 	async function handleFile(file: File | undefined) {
@@ -104,7 +124,7 @@
 	}
 </script>
 
-<Card>
+<Card class="p-4" padded={false}>
 	<MeterHeader type={meter.type} serial={meter.serial} {previous} />
 
 	{#if rejectReason}
@@ -129,15 +149,37 @@
 
 	<div class="mt-4">
 		{#if photos && mode === 'choose'}
-			<div class="flex flex-wrap gap-2">
-				<Button {disabled} onclick={() => fileInput?.click()}>
-					{#snippet icon()}<Camera class="size-4" />{/snippet}
-					{m.photo_take()}
-				</Button>
-				<Button variant="secondary" {disabled} onclick={() => (mode = 'manual')}>
-					{#snippet icon()}<Keyboard class="size-4" />{/snippet}
-					{m.photo_manual()}
-				</Button>
+			<div class="grid gap-3 sm:grid-cols-2">
+				<button
+					type="button"
+					{disabled}
+					onclick={() => fileInput?.click()}
+					class="flex items-center gap-3 rounded-card bg-primary-500 px-4 py-3 text-left text-white shadow-[0_8px_24px_-10px_var(--color-primary-500)] transition-colors hover:bg-primary-400 disabled:opacity-60"
+				>
+					<span class="grid size-9 shrink-0 place-items-center rounded-control bg-white/20">
+						<Camera class="size-[18px]" />
+					</span>
+					<span>
+						<span class="block text-sm font-semibold">{m.photo_take()}</span>
+						<span class="block text-xs text-white/80">{m.photo_take_hint()}</span>
+					</span>
+				</button>
+				<button
+					type="button"
+					{disabled}
+					onclick={() => (mode = 'manual')}
+					class="flex items-center gap-3 rounded-card border border-line bg-canvas px-4 py-3 text-left transition-colors hover:border-line-strong disabled:opacity-60"
+				>
+					<span
+						class="grid size-9 shrink-0 place-items-center rounded-control bg-surface-muted text-ink-soft"
+					>
+						<Keyboard class="size-[18px]" />
+					</span>
+					<span>
+						<span class="block text-sm font-semibold text-ink">{m.photo_manual()}</span>
+						<span class="block text-xs text-ink-muted">{m.photo_manual_hint()}</span>
+					</span>
+				</button>
 			</div>
 		{:else if mode === 'busy'}
 			<div class="flex items-center gap-4">

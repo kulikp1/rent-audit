@@ -22,12 +22,22 @@ export const load: PageServerLoad = async ({ locals }) => {
 		scope.readings.find({ leaseId: lease._id, period }).lean()
 	]);
 	const state = new Map(existing.map((reading) => [String(reading.meterId), reading]));
+	const sent = meters
+		.map((meter) => ({ meter, reading: state.get(String(meter._id)) }))
+		.filter(({ reading }) => reading && reading.status !== 'rejected')
+		.map(({ meter, reading }) => ({
+			id: String(meter._id),
+			type: meter.type,
+			values: reading!.values,
+			sentAt: reading!.createdAt.toISOString()
+		}));
 	const open = meters.filter((meter) => {
 		const reading = state.get(String(meter._id));
 		return !reading || reading.status === 'rejected';
 	});
 	return {
 		period,
+		sent,
 		capabilities: {
 			photos: cloudinaryConfigured(),
 			ai: cloudinaryConfigured() && geminiConfigured()
