@@ -38,7 +38,7 @@
 </svelte:head>
 
 <div
-	class="relative grid min-h-dvh bg-night-950 font-onest text-white lg:h-dvh lg:grid-cols-[1fr_23.5rem] lg:overflow-hidden"
+	class="relative grid min-h-dvh bg-night-950 font-onest text-white lg:h-dvh lg:grid-cols-[1fr_30rem] lg:overflow-hidden"
 >
 	<div class="absolute top-6 right-6 z-10 lg:right-8">
 		<LocaleSwitcher tone="night" />
@@ -74,7 +74,7 @@
 	</section>
 
 	<main
-		class="relative flex flex-col border-t border-white/[0.08] px-6 py-10 sm:px-12 lg:border-t-0 lg:border-l lg:px-8 lg:py-14"
+		class="relative flex flex-col border-t border-white/[0.08] px-6 py-10 sm:px-12 lg:border-t-0 lg:border-l lg:px-12 lg:py-14"
 	>
 		<div class="my-auto w-full max-w-sm py-8 lg:max-w-none">
 			<h1 class="font-display text-[1.75rem] leading-[1.05] font-extrabold tracking-tight">
