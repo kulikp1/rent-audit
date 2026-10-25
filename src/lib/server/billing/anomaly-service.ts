@@ -5,6 +5,8 @@ import {
 	analyzeSeries,
 	consumptionSeries,
 	mergeSeries,
+	median,
+	normPerResident,
 	periodIndex,
 	type AnalyzedPoint,
 	type AnomalyReason
@@ -41,16 +43,49 @@ export async function apartmentAnalysis(
 	return result;
 }
 
+export type AnomalySeriesPoint = { period: string; value: number; anomaly: boolean };
+
 export type DashboardAnomaly = {
 	apartmentId: string;
 	apartmentName: string;
 	service: Service;
 	period: string;
 	reasons: AnomalyReason[];
+	value: number;
+	usual: number;
+	norm: number;
+	series: AnomalySeriesPoint[];
 };
 
+const SERIES_LENGTH = 6;
+
+function buildAnomaly(
+	apartment: Pick<ApartmentDoc, '_id' | 'name' | 'residents'>,
+	service: Service,
+	points: AnalyzedPoint[],
+	index: number
+): DashboardAnomaly {
+	const point = points[index]!;
+	const history = points.slice(Math.max(0, index - SERIES_LENGTH), index);
+	return {
+		apartmentId: String(apartment._id),
+		apartmentName: apartment.name,
+		service,
+		period: point.period,
+		reasons: point.reasons,
+		value: point.value,
+		usual: median(history.map((item) => item.value)),
+		norm: normPerResident[service] * Math.max(1, apartment.residents ?? 1),
+		series: points.slice(Math.max(0, index - SERIES_LENGTH + 1), index + 1).map((item) => ({
+			period: item.period,
+			value: item.value,
+			anomaly: item.reasons.length > 0
+		}))
+	};
+}
+
 function recentAnomalies(
-	apartment: Pick<ApartmentDoc, '_id' | 'name'>,
+	apartment: Pick<ApartmentDoc, '_id' | 'name' | 'residents'>,
 	analysis: ApartmentAnalysis,
 	currentIndex: number
 ): DashboardAnomaly[] {
@@ -58,13 +93,7 @@ function recentAnomalies(
 	for (const [service, points] of Object.entries(analysis) as [Service, AnalyzedPoint[]][]) {
 		const last = points[points.length - 1];
 		if (last && last.reasons.length > 0 && currentIndex - periodIndex(last.period) <= 2) {
-			found.push({
-				apartmentId: String(apartment._id),
-				apartmentName: apartment.name,
-				service,
-				period: last.period,
-				reasons: last.reasons
-			});
+			found.push(buildAnomaly(apartment, service, points, points.length - 1));
 		}
 	}
 	return found;
@@ -103,17 +132,13 @@ export async function allAnomalies(scope: Repo, now = new Date()): Promise<Histo
 	for (const apartment of apartments) {
 		const analysis = await apartmentAnalysis(scope, apartment);
 		for (const [service, points] of Object.entries(analysis) as [Service, AnalyzedPoint[]][]) {
-			for (const point of points) {
-				if (point.reasons.length === 0) continue;
+			points.forEach((point, index) => {
+				if (point.reasons.length === 0) return;
 				found.push({
-					apartmentId: String(apartment._id),
-					apartmentName: apartment.name,
-					service,
-					period: point.period,
-					reasons: point.reasons,
+					...buildAnomaly(apartment, service, points, index),
 					recent: currentIndex - periodIndex(point.period) <= 2
 				});
-			}
+			});
 		}
 	}
 	return found.sort(

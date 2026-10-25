@@ -69,6 +69,13 @@
 		{ realtor: m.role_realtor(), tenant: m.role_tenant(), admin: m.role_admin() }[user.role]
 	);
 
+	const currentLabel = $derived(
+		items
+			.filter((item) => isActive(item.href, item.exact))
+			.sort((left, right) => right.href.length - left.href.length)[0]
+			?.label()
+	);
+
 	function isActive(href: string, exact?: boolean) {
 		const path = page.url.pathname;
 		return exact ? path === href : path === href || path.startsWith(`${href}/`);
@@ -177,12 +184,18 @@
 		>
 			<MenuIcon class="size-5" />
 		</button>
+		<nav aria-label="breadcrumb" class="hidden text-xs text-ink-muted lg:block">
+			{m.app_name()}
+			{#if currentLabel}
+				<span class="mx-1">/</span><span class="font-semibold text-ink">{currentLabel}</span>
+			{/if}
+		</nav>
 		<div class="ml-auto flex items-center gap-3">
 			{#if role && notifications}
 				<NotificationBell unread={notifications.unread} recent={notifications.recent} {role} />
 			{/if}
 			<ThemeSwitcher />
-			<LocaleSwitcher />
+			<LocaleSwitcher tone="pill" />
 			<Menu
 				label={user.name}
 				triggerClass="flex items-center gap-2 rounded-full p-0.5 transition-shadow hover:shadow-card focus-visible:outline-2"

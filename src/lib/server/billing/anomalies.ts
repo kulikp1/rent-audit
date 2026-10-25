@@ -15,7 +15,7 @@ export type AnomalyReason = { code: AnomalyCode; value: number; expected: number
 export type AnomalyContext = { service: Service; residents: number };
 
 const floor: Record<Service, number> = { water: 1, gas: 10, electricity: 50 };
-const normPerResident: Record<Service, number> = { water: 10, gas: 30, electricity: 300 };
+export const normPerResident: Record<Service, number> = { water: 10, gas: 30, electricity: 300 };
 
 export const HIGH_RATIO = 1.5;
 export const LOW_RATIO = 0.3;

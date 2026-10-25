@@ -5,9 +5,9 @@
 	import { formatQuantity } from '#lib/utils/invoice.js';
 	import Badge from '../ui/Badge.svelte';
 
-	type Props = { reasons: AnomalyReason[]; unit: string; period?: string };
+	type Props = { reasons: AnomalyReason[]; unit: string; period?: string; showBadge?: boolean };
 
-	let { reasons, unit, period }: Props = $props();
+	let { reasons, unit, period, showBadge = true }: Props = $props();
 
 	function text(reason: AnomalyReason): string {
 		const params = {
@@ -26,13 +26,15 @@
 </script>
 
 <div class="space-y-2">
-	<div class="flex items-center gap-2">
-		<Badge tone="danger">
-			<TriangleAlert class="size-3" />
-			{m.anomaly_badge()}
-		</Badge>
-		{#if period}<span class="text-[13px] text-ink-muted">{period}</span>{/if}
-	</div>
+	{#if showBadge}
+		<div class="flex items-center gap-2">
+			<Badge tone="danger">
+				<TriangleAlert class="size-3" />
+				{m.anomaly_badge()}
+			</Badge>
+			{#if period}<span class="text-[13px] text-ink-muted">{period}</span>{/if}
+		</div>
+	{/if}
 	<ul class="space-y-1 text-sm text-ink-soft">
 		{#each reasons as reason (reason.code)}
 			<li>{text(reason)}</li>
