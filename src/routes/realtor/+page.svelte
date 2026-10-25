@@ -12,6 +12,7 @@
 		TriangleAlert,
 		Zap
 	} from '@lucide/svelte';
+	import { fitViewport } from '#lib/utils/fit.js';
 	import { m } from '#lib/paraglide/messages.js';
 	import { getLocale } from '#lib/paraglide/runtime.js';
 	import Badge from '#lib/components/ui/Badge.svelte';
@@ -152,7 +153,7 @@
 
 <svelte:head><title>{m.realtor_dashboard_title()} · {m.app_name()}</title></svelte:head>
 
-<div class="mb-6 flex flex-wrap items-start justify-between gap-4">
+<div class="mb-4 flex flex-wrap items-start justify-between gap-3">
 	<div class="transition-opacity {now ? 'opacity-100' : 'opacity-0'}">
 		<p class="min-h-5 text-[13px] text-ink-muted">{today}</p>
 		<h1 class="mt-1 text-3xl font-bold tracking-tight text-ink">
@@ -161,7 +162,7 @@
 		<p class="mt-1.5 text-sm text-ink-muted">{m.realtor_dashboard_subtitle()}</p>
 	</div>
 
-	<div class="flex items-center gap-4 rounded-card border border-line bg-surface px-5 py-4">
+	<div class="flex items-center gap-4 rounded-card border border-line bg-surface px-4 py-3">
 		<svg viewBox="0 0 40 40" class="size-10 -rotate-90" fill="none" aria-hidden="true">
 			<circle cx="20" cy="20" r={RING_RADIUS} stroke="var(--color-line-strong)" stroke-width="3" />
 			<circle
@@ -184,7 +185,9 @@
 <div class="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
 	{#each stats as stat (stat.label)}
 		<div
-			class="flex min-h-36 flex-col justify-between rounded-card border p-5 {cardTones[stat.tone]}"
+			class="flex min-h-24 flex-col justify-between gap-2 rounded-card border p-4 {cardTones[
+				stat.tone
+			]}"
 		>
 			<div class="flex items-start justify-between gap-2">
 				<p class="text-[13px] leading-snug sm:text-sm {labelTones[stat.tone]}">{stat.label}</p>
@@ -210,8 +213,8 @@
 </div>
 
 {#if data.anomalies.length > 0}
-	<Card class="mt-6" padded={false}>
-		<div class="flex items-center justify-between gap-3 border-b border-line px-6 py-5">
+	<Card class="mt-4" padded={false}>
+		<div class="flex items-center justify-between gap-3 border-b border-line px-5 py-3.5">
 			<div class="flex items-center gap-2.5">
 				<h2 class="text-lg font-semibold tracking-tight">{m.dashboard_anomalies_title()}</h2>
 				<Badge>{data.anomalies.length}</Badge>
@@ -224,12 +227,12 @@
 			</a>
 		</div>
 
-		<div class="divide-y divide-line">
+		<div class="divide-y divide-line overflow-y-auto" use:fitViewport>
 			{#each data.anomalies.slice(0, VISIBLE_ANOMALIES) as item (item.apartmentId + item.service)}
 				{@const ServiceIcon = serviceIcons[item.service]}
 				{@const unit = unitFor(item.service)}
 				{@const ceiling = Math.max(item.norm, ...item.series.map((point) => point.value), 1) * 1.15}
-				<div class="grid gap-6 p-6 lg:grid-cols-[1fr_1.1fr]">
+				<div class="grid gap-5 p-5 lg:grid-cols-[1fr_1.1fr]">
 					<div class="min-w-0">
 						<div class="flex items-center gap-3">
 							<span

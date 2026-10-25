@@ -225,7 +225,7 @@
 			<button
 				type="button"
 				onclick={() => (status = status === card.filter ? 'all' : card.filter)}
-				class="rounded-card border p-5 text-left transition-colors {card.primary
+				class="rounded-card border px-4 py-3.5 text-left transition-colors {card.primary
 					? 'border-primary-500 bg-primary-500 text-white'
 					: 'border-line bg-surface hover:border-line-strong'} {status === card.filter &&
 				!card.primary
@@ -239,7 +239,7 @@
 				>
 					<span class="size-2 rounded-full {card.dot}"></span>{card.label}
 				</span>
-				<span class="mt-3 block font-mono text-2xl font-bold tracking-tight tabular-nums">
+				<span class="mt-2 block font-mono text-2xl font-bold tracking-tight tabular-nums">
 					{formatMoney(card.total)}
 				</span>
 				<span class="mt-1 block text-xs {card.primary ? 'text-white/80' : 'text-ink-muted'}">
@@ -249,7 +249,7 @@
 		{/each}
 	</div>
 
-	<div class="mt-6 flex flex-wrap items-center gap-3">
+	<div class="mt-4 flex flex-wrap items-center gap-3">
 		<div
 			role="group"
 			aria-label={m.apt_status()}

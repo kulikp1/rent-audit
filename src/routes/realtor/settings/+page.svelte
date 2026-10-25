@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { fitViewport } from '#lib/utils/fit.js';
 	import { invalidateAll } from '$app/navigation';
 	import { Camera, Check, CircleAlert, LoaderCircle, Monitor, Moon, Sun } from '@lucide/svelte';
 	import { avatarColorKeys, avatarColors, type AvatarColor } from '#lib/avatar-colors.js';
@@ -84,7 +85,8 @@
 	<form
 		id="settings-form"
 		method="POST"
-		class="grid items-start gap-5 lg:grid-cols-2"
+		class="-mx-1 grid items-start gap-4 overflow-y-auto px-1 pb-1 lg:grid-cols-2"
+		use:fitViewport
 		use:enhance={() => {
 			saving = true;
 			return async ({ result, update }) => {
@@ -94,7 +96,7 @@
 			};
 		}}
 	>
-		<div class="space-y-5">
+		<div class="space-y-4">
 			<Card>
 				<div class="flex flex-wrap items-center gap-6">
 					<span class="relative">
@@ -170,7 +172,7 @@
 				<div
 					role="radiogroup"
 					aria-label={m.settings_appearance_title()}
-					class="mt-5 grid grid-cols-3 gap-3"
+					class="mt-4 grid grid-cols-3 gap-3"
 				>
 					{#each themes as option (option.value)}
 						{@const selected = themePref === option.value}
@@ -183,7 +185,7 @@
 								? 'border-primary-500 ring-1 ring-primary-500'
 								: 'border-line hover:border-line-strong'}"
 						>
-							<span class="relative flex h-20 overflow-hidden rounded-control" aria-hidden="true">
+							<span class="relative flex h-14 overflow-hidden rounded-control" aria-hidden="true">
 								{#if option.value !== 'dark'}
 									<span
 										class="flex flex-1 {option.value === 'system'
@@ -230,7 +232,7 @@
 				</div>
 
 				<div
-					class="mt-5 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-5"
+					class="mt-4 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-4"
 				>
 					<div>
 						<p class="text-sm font-semibold text-ink">{m.settings_language_title()}</p>
@@ -259,7 +261,7 @@
 			<Card>
 				<h2 class="text-base font-semibold">{m.settings_schedule_title()}</h2>
 				<p class="mt-1 text-sm text-ink-muted">{m.settings_schedule_text()}</p>
-				<div class="mt-5 grid gap-4 sm:grid-cols-2">
+				<div class="mt-4 grid gap-4 sm:grid-cols-2">
 					<FormField
 						label={m.settings_readings_day()}
 						hint={m.settings_day_hint()}
@@ -295,11 +297,11 @@
 				</div>
 			</Card>
 		</div>
-		<div class="space-y-5">
+		<div class="space-y-4">
 			<Card>
 				<h2 class="text-base font-semibold">{m.settings_payout_title()}</h2>
 				<p class="mt-1 text-sm text-ink-muted">{m.settings_payout_text()}</p>
-				<div class="mt-5 space-y-6">
+				<div class="mt-4 space-y-4">
 					<div class="space-y-4">
 						<FormField label={m.settings_full_name()} error={errors.fullName}>
 							{#snippet children(field)}
@@ -353,7 +355,7 @@
 							{m.settings_preview_label()}
 						</p>
 						<div
-							class="relative flex min-h-60 flex-col justify-between overflow-hidden rounded-card bg-primary-500 p-5 text-white"
+							class="relative flex min-h-44 flex-col justify-between overflow-hidden rounded-card bg-primary-500 p-5 text-white"
 						>
 							<span
 								class="pointer-events-none absolute -top-14 -right-14 size-44 rounded-full border border-white/20"

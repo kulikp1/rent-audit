@@ -1,6 +1,6 @@
 const MIN_HEIGHT = 240;
 
-export function fitViewport(node: HTMLElement) {
+export function fitViewport(node: HTMLElement, minHeight = MIN_HEIGHT) {
 	let frame = 0;
 
 	function update() {
@@ -11,7 +11,7 @@ export function fitViewport(node: HTMLElement) {
 		const top = rect.top + window.scrollY;
 		const below = document.documentElement.scrollHeight - (top + rect.height);
 		const available = window.innerHeight - top - below;
-		node.style.maxHeight = `${Math.max(MIN_HEIGHT, Math.floor(available))}px`;
+		node.style.maxHeight = `${Math.max(minHeight, Math.floor(available))}px`;
 	}
 
 	function schedule() {

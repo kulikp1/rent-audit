@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { ChartColumn, Droplet, Flame, Zap } from '@lucide/svelte';
+	import { fitViewport } from '#lib/utils/fit.js';
 	import { m } from '#lib/paraglide/messages.js';
 	import { getLocale } from '#lib/paraglide/runtime.js';
 	import type { StatsView } from '#lib/server/billing/stats.js';
@@ -69,7 +70,7 @@
 		</EmptyState>
 	</Card>
 {:else}
-	<div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+	<div class="mb-3 flex flex-wrap items-center justify-between gap-3">
 		<div class="flex flex-wrap gap-3">
 			{#each visible as item (item.service)}
 				{@const Icon = serviceIcons[item.service]}
@@ -79,7 +80,7 @@
 					type="button"
 					aria-pressed={selected}
 					onclick={() => (chosen = item.service)}
-					class="flex items-center gap-3 rounded-card border px-4 py-3 text-left transition-colors {selected
+					class="flex items-center gap-3 rounded-card border px-4 py-2.5 text-left transition-colors {selected
 						? 'border-primary-500 bg-surface ring-1 ring-primary-500'
 						: 'border-line bg-surface hover:border-line-strong'}"
 				>
@@ -122,7 +123,7 @@
 	</div>
 
 	<div class="grid grid-cols-[minmax(0,1fr)] items-start gap-4 xl:grid-cols-[minmax(0,1fr)_21rem]">
-		<Card class="p-6" padded={false}>
+		<Card class="p-5" padded={false}>
 			<div class="mb-4 flex items-baseline justify-between">
 				<h2 class="text-base font-semibold">{serviceLabel(active.service)}</h2>
 				<span class="font-mono text-xs text-ink-muted">{unit}</span>
@@ -136,19 +137,19 @@
 			/>
 		</Card>
 
-		<div class="space-y-4">
+		<div class="space-y-3">
 			<div class="grid grid-cols-2 gap-3">
 				{#each [{ label: m.stats_total(), value: formatQuantity(total), hint: unit, hot: false }, { label: m.stats_avg(), value: formatQuantity(Math.round(average * 10) / 10), hint: unit, hot: false }, { label: m.stats_max(), value: peak ? formatQuantity(peak.value) : '—', hint: peak ? formatPeriod(peak.period) : '', hot: !!peak && peak.reasons.length > 0 }, { label: m.stats_anomalies_count(), value: String(flagged.length), hint: m.stats_to_review(), hot: flagged.length > 0 }] as tile (tile.label)}
-					<div class="rounded-card border border-line bg-surface p-4">
+					<div class="rounded-card border border-line bg-surface px-4 py-3">
 						<p class="text-xs text-ink-muted">{tile.label}</p>
 						<p
-							class="mt-2 font-mono text-2xl font-bold tracking-tight tabular-nums {tile.hot
+							class="mt-1 font-mono text-xl font-bold tracking-tight tabular-nums {tile.hot
 								? 'text-danger-ink'
 								: 'text-ink'}"
 						>
 							{tile.value}
 						</p>
-						<p class="mt-1 text-[11px] text-ink-muted">{tile.hint}</p>
+						<p class="text-[11px] text-ink-muted">{tile.hint}</p>
 					</div>
 				{/each}
 			</div>
@@ -156,7 +157,7 @@
 			{#if flagged.length > 0}
 				<Card>
 					<h3 class="text-base font-semibold">{m.stats_anomalies_title()}</h3>
-					<div class="mt-3 space-y-2.5">
+					<div class="mt-3 space-y-2.5 overflow-y-auto" use:fitViewport={120}>
 						{#each flagged as point (point.period)}
 							<div class="rounded-control border border-line bg-canvas p-3">
 								<div

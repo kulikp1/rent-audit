@@ -17,7 +17,7 @@
 			.join('')
 	);
 
-	const sizes = { sm: 'size-8 text-xs', md: 'size-9 text-[13px]', xl: 'size-20 text-3xl' };
+	const sizes = { sm: 'size-8 text-xs', md: 'size-9 text-[13px]', xl: 'size-16 text-2xl' };
 </script>
 
 <span

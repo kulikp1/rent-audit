@@ -107,7 +107,7 @@
 			? 'translate-x-0'
 			: '-translate-x-full'}"
 	>
-		<div class="flex h-16 items-center justify-between pr-3 pl-[15px]">
+		<div class="flex h-14 items-center justify-between pr-3 pl-[15px]">
 			<a href={pathTo('/')} aria-label={m.app_name()}><Logo compact={!expanded} /></a>
 			{#if expanded}
 				<button
@@ -174,7 +174,7 @@
 	</aside>
 
 	<header
-		class="sticky top-0 z-20 flex h-16 items-center justify-between gap-3 border-b border-line bg-surface/85 px-4 backdrop-blur lg:px-8"
+		class="sticky top-0 z-20 flex h-14 items-center justify-between gap-3 border-b border-line bg-surface/85 px-4 backdrop-blur lg:px-8"
 	>
 		<button
 			type="button"
@@ -217,7 +217,7 @@
 
 	<form bind:this={logoutForm} method="POST" action="/auth/logout" class="hidden"></form>
 
-	<main class="mx-auto w-full max-w-6xl px-4 py-6 lg:px-8">
+	<main class="mx-auto w-full max-w-6xl px-4 py-4 lg:px-8">
 		{@render children()}
 	</main>
 </div>

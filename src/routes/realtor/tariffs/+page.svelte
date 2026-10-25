@@ -158,7 +158,7 @@
 		{@const style = serviceStyles[section.service]}
 		{@const unit = section.service === 'electricity' ? m.unit_kwh() : m.unit_m3()}
 		<div
-			class="relative flex flex-col gap-5 overflow-hidden rounded-card border border-line bg-surface p-5"
+			class="relative flex flex-col gap-4 overflow-hidden rounded-card border border-line bg-surface p-4"
 		>
 			<span
 				class="pointer-events-none absolute -top-14 -right-14 size-44 rounded-full opacity-[0.16]"
@@ -258,12 +258,12 @@
 	{/each}
 </div>
 
-<Card class="mt-4" padded={false}>
-	<div class="grid gap-6 p-6 lg:grid-cols-[1fr_20rem]">
+<Card class="mt-3" padded={false}>
+	<div class="grid gap-5 p-4 lg:grid-cols-[1fr_20rem]">
 		<div>
 			<h2 class="text-base font-semibold">{m.tariff_calc_title()}</h2>
 			<p class="mt-1 text-sm text-ink-muted">{m.tariff_calc_text()}</p>
-			<div class="mt-5 grid grid-cols-2 gap-3 xl:grid-cols-4">
+			<div class="mt-3 grid grid-cols-2 gap-3 xl:grid-cols-4">
 				{#each calcRows as row (row.key)}
 					<label class="block rounded-control border border-line bg-canvas px-3.5 py-3">
 						<span class="flex items-center gap-2 text-xs text-ink-muted">

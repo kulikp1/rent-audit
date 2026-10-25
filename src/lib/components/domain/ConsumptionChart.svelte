@@ -108,6 +108,6 @@
 	});
 </script>
 
-<div class="h-80 w-full lg:h-[26rem]" role="img" aria-label={name}>
+<div class="h-[clamp(13rem,calc(100dvh-25rem),26rem)] w-full" role="img" aria-label={name}>
 	<canvas bind:this={canvas} aria-hidden="true"></canvas>
 </div>
