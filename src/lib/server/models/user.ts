@@ -1,4 +1,5 @@
 import mongoose, { Schema, type InferSchemaType } from 'mongoose';
+import { avatarColorKeys } from '#lib/avatar-colors.js';
 
 export const roles = ['realtor', 'tenant', 'admin'] as const;
 export type Role = (typeof roles)[number];
@@ -20,6 +21,8 @@ const userSchema = new Schema(
 		email: { type: String, required: true, lowercase: true, index: true },
 		name: { type: String, required: true },
 		picture: { type: String, default: '' },
+		pictureCustom: { type: Boolean, default: false },
+		avatarColor: { type: String, enum: avatarColorKeys, default: 'blue' },
 		role: { type: String, enum: roles, required: true },
 		locale: { type: String, enum: ['uk', 'en'], default: 'uk' },
 		realtorProfile: { type: realtorProfileSchema, default: () => ({}) }

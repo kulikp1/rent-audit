@@ -52,3 +52,32 @@ export async function fetchPrivateImage(publicId: string): Promise<{ data: Buffe
 		mime: response.headers.get('content-type')?.split(';')[0] ?? 'image/jpeg'
 	};
 }
+
+const AVATAR_TRANSFORMATION = 'c_fill,g_face,w_256,h_256';
+
+export function avatarFolder(userId: string): string {
+	return `rent-audit/avatars/${userId}`;
+}
+
+export function signAvatarUpload(userId: string, now = Math.floor(Date.now() / 1000)) {
+	const params = {
+		folder: avatarFolder(userId),
+		timestamp: now,
+		transformation: AVATAR_TRANSFORMATION
+	};
+	return {
+		cloudName: CLOUDINARY_CLOUD_NAME,
+		apiKey: CLOUDINARY_API_KEY,
+		uploadUrl: `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+		params,
+		signature: signParams(params, CLOUDINARY_API_SECRET)
+	};
+}
+
+export function avatarBelongsTo(publicId: string, userId: string): boolean {
+	return publicId.startsWith(`${avatarFolder(userId)}/`) && !publicId.includes('..');
+}
+
+export function avatarUrl(publicId: string): string {
+	return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/${publicId}`;
+}

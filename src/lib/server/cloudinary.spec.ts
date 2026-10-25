@@ -7,8 +7,16 @@ vi.mock('$app/env/private', () => ({
 	CLOUDINARY_API_SECRET: 'secret'
 }));
 
-const { signParams, signUpload, privateDownloadUrl, publicIdBelongsTo, cloudinaryConfigured } =
-	await import('./cloudinary');
+const {
+	signParams,
+	signUpload,
+	privateDownloadUrl,
+	publicIdBelongsTo,
+	cloudinaryConfigured,
+	signAvatarUpload,
+	avatarBelongsTo,
+	avatarUrl
+} = await import('./cloudinary');
 
 describe('cloudinary signing', () => {
 	it('signs sorted key=value pairs joined with & followed by the secret using SHA-1', () => {
@@ -56,5 +64,30 @@ describe('cloudinary signing', () => {
 
 	it('reports configured state', () => {
 		expect(cloudinaryConfigured()).toBe(true);
+	});
+});
+
+describe('cloudinary avatars', () => {
+	it('signs a public upload with a face-aware square crop in the user folder', () => {
+		const upload = signAvatarUpload('u1', 1000);
+		expect(upload.params).toEqual({
+			folder: 'rent-audit/avatars/u1',
+			timestamp: 1000,
+			transformation: 'c_fill,g_face,w_256,h_256'
+		});
+		expect(upload.signature).toBe(signParams(upload.params, 'secret'));
+	});
+
+	it('accepts only public ids inside the user avatar folder', () => {
+		expect(avatarBelongsTo('rent-audit/avatars/u1/abc', 'u1')).toBe(true);
+		expect(avatarBelongsTo('rent-audit/avatars/u2/abc', 'u1')).toBe(false);
+		expect(avatarBelongsTo('rent-audit/avatars/u1/../u2/abc', 'u1')).toBe(false);
+		expect(avatarBelongsTo('rent-audit/apt1/abc', 'u1')).toBe(false);
+	});
+
+	it('builds the public delivery url', () => {
+		expect(avatarUrl('rent-audit/avatars/u1/abc')).toBe(
+			'https://res.cloudinary.com/demo/image/upload/rent-audit/avatars/u1/abc'
+		);
 	});
 });

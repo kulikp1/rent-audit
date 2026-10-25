@@ -18,6 +18,7 @@ export const load: LayoutServerLoad = async ({ locals, cookies }) => {
 			name: doc.name,
 			email: doc.email,
 			picture: doc.picture,
+			avatarColor: doc.avatarColor ?? 'blue',
 			role: doc.role
 		}
 	};

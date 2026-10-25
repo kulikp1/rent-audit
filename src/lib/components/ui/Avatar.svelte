@@ -1,9 +1,12 @@
 <script lang="ts">
+	import { avatarColors, type AvatarColor } from '#lib/avatar-colors.js';
+
 	let {
 		name,
 		src = '',
-		size = 'md'
-	}: { name: string; src?: string; size?: 'sm' | 'md' } = $props();
+		size = 'md',
+		color
+	}: { name: string; src?: string; size?: 'sm' | 'md' | 'xl'; color?: AvatarColor } = $props();
 
 	const initials = $derived(
 		name
@@ -13,13 +16,15 @@
 			.map((part) => part[0]!.toUpperCase())
 			.join('')
 	);
+
+	const sizes = { sm: 'size-8 text-xs', md: 'size-9 text-[13px]', xl: 'size-20 text-3xl' };
 </script>
 
 <span
-	class="inline-grid shrink-0 place-items-center overflow-hidden rounded-full bg-primary-100 font-semibold text-primary-ink {size ===
-	'sm'
-		? 'size-8 text-xs'
-		: 'size-9 text-[13px]'}"
+	style={color ? `background-color: ${avatarColors[color]}` : undefined}
+	class="inline-grid shrink-0 place-items-center overflow-hidden rounded-full font-semibold {color
+		? 'text-white'
+		: 'bg-primary-100 text-primary-ink'} {sizes[size]}"
 >
 	{#if src}
 		<img {src} alt="" class="size-full object-cover" referrerpolicy="no-referrer" />

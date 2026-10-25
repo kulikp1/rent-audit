@@ -53,6 +53,7 @@ export default defineConfig({
 						'data:',
 						'blob:',
 						'https://api.cloudinary.com',
+						'https://res.cloudinary.com',
 						'https://lh3.googleusercontent.com'
 					],
 					'font-src': ['self', 'data:'],

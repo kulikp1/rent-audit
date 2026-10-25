@@ -2,18 +2,28 @@ import { fail } from '@sveltejs/kit';
 import { fieldErrors } from '#lib/schemas/errors.js';
 import { settingsSchema } from '#lib/schemas/settings.js';
 import { requireRole } from '#lib/server/auth/guards.js';
+import { cloudinaryConfigured } from '#lib/server/cloudinary.js';
 import { connectDb } from '#lib/server/db.js';
 import { User } from '#lib/server/models/user.js';
 import type { Actions, PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ locals }) => {
+export const load: PageServerLoad = async ({ locals, cookies }) => {
 	const user = requireRole(locals, 'realtor');
 	await connectDb();
-	const doc = await User.findById(user.id).select('name email realtorProfile').lean();
+	const doc = await User.findById(user.id)
+		.select('name email picture avatarColor realtorProfile')
+		.lean();
 	const profile = doc?.realtorProfile;
+	const themeCookie = cookies.get('ra_theme');
+	const themePreference: 'light' | 'dark' | 'system' =
+		themeCookie === 'light' || themeCookie === 'system' ? themeCookie : 'dark';
 	return {
+		themePreference,
+		avatarUploadEnabled: cloudinaryConfigured(),
 		name: doc?.name ?? '',
 		email: doc?.email ?? '',
+		picture: doc?.picture ?? '',
+		avatarColor: doc?.avatarColor ?? 'blue',
 		profile: {
 			fullName: profile?.fullName ?? '',
 			iban: profile?.iban ?? '',
@@ -31,7 +41,8 @@ export const actions: Actions = {
 		const parsed = settingsSchema.safeParse(values);
 		if (!parsed.success) return fail(400, { errors: fieldErrors(parsed.error), values });
 		await connectDb();
-		await User.updateOne({ _id: user.id }, { $set: { realtorProfile: parsed.data } });
+		const { avatarColor, ...realtorProfile } = parsed.data;
+		await User.updateOne({ _id: user.id }, { $set: { avatarColor, realtorProfile } });
 		return { success: true, errors: {} };
 	}
 };

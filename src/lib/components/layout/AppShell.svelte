@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { pathTo } from '#lib/utils/path.js';
 	import type { Snippet } from 'svelte';
+	import type { AvatarColor } from '#lib/avatar-colors.js';
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 	import { LogOut, Menu as MenuIcon, Pin, X } from '@lucide/svelte';
@@ -17,6 +18,7 @@
 	type ShellUser = {
 		name: string;
 		picture: string;
+		avatarColor?: AvatarColor;
 		role: 'realtor' | 'tenant' | 'admin';
 	};
 
@@ -155,7 +157,7 @@
 
 		<div class="border-t border-line p-3">
 			<div class="flex items-center gap-3 rounded-control px-2 py-2">
-				<Avatar name={user.name} src={user.picture} />
+				<Avatar name={user.name} src={user.picture} color={user.avatarColor} />
 				<div class="min-w-0 {expanded ? '' : 'lg:hidden'}">
 					<p class="truncate text-sm font-medium text-ink">{user.name}</p>
 					<p class="truncate text-xs text-ink-muted">{roleLabel}</p>
@@ -194,7 +196,7 @@
 				]}
 			>
 				{#snippet trigger()}
-					<Avatar name={user.name} src={user.picture} />
+					<Avatar name={user.name} src={user.picture} color={user.avatarColor} />
 				{/snippet}
 			</Menu>
 		</div>

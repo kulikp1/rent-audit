@@ -5,6 +5,14 @@ import { paraglideMiddleware } from '#lib/paraglide/server.js';
 import { resolveSession } from '#lib/server/auth/session.js';
 
 const THEME_COOKIE = 'ra_theme';
+const THEME_RESOLVED_COOKIE = 'ra_theme_resolved';
+
+function resolveTheme(get: (name: string) => string | undefined) {
+	const preference = get(THEME_COOKIE);
+	if (preference === 'light') return 'light';
+	if (preference === 'system') return get(THEME_RESOLVED_COOKIE) === 'light' ? 'light' : 'dark';
+	return 'dark';
+}
 
 const handleParaglide: Handle = ({ event, resolve }) =>
 	paraglideMiddleware(event.request, ({ request, locale }) =>
@@ -15,7 +23,10 @@ const handleParaglide: Handle = ({ event, resolve }) =>
 					html
 						.replace('%paraglide.lang%', locale)
 						.replace('%paraglide.dir%', getTextDirection(locale))
-						.replace('%app.theme%', event.cookies.get(THEME_COOKIE) === 'light' ? 'light' : 'dark')
+						.replace(
+							'%app.theme%',
+							resolveTheme((name) => event.cookies.get(name))
+						)
 			}
 		)
 	);

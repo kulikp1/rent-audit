@@ -52,7 +52,7 @@ export const GET: RequestHandler = async ({ cookies, url }) => {
 	let user = await User.findOne({ googleId: profile.googleId });
 	if (user) {
 		user.name = profile.name;
-		user.picture = profile.picture;
+		if (!user.pictureCustom) user.picture = profile.picture;
 		user.email = profile.email;
 		if (isAdmin) user.role = 'admin';
 		await user.save();

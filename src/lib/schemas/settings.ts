@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { avatarColorKeys } from '../avatar-colors';
 
 function validIban(value: string): boolean {
 	if (!/^UA\d{27}$/.test(value)) return false;
@@ -10,6 +11,7 @@ function validIban(value: string): boolean {
 }
 
 export const settingsSchema = z.object({
+	avatarColor: z.enum(avatarColorKeys).default('blue'),
 	fullName: z.string().trim().max(120, 'too_long').default(''),
 	iban: z
 		.string()

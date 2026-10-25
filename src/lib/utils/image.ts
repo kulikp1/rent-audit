@@ -22,13 +22,17 @@ type UploadSignature = {
 	params: Record<string, string | number>;
 };
 
-export async function uploadToCloudinary(blob: Blob): Promise<string> {
-	const signResponse = await fetch('/api/cloudinary/sign', { method: 'POST' });
+export async function uploadToCloudinary(
+	blob: Blob,
+	signUrl = '/api/cloudinary/sign',
+	filename = 'meter.jpg'
+): Promise<string> {
+	const signResponse = await fetch(signUrl, { method: 'POST' });
 	if (!signResponse.ok) throw new Error('sign_failed');
 	const signed = (await signResponse.json()) as UploadSignature;
 
 	const body = new FormData();
-	body.set('file', blob, 'meter.jpg');
+	body.set('file', blob, filename);
 	body.set('api_key', signed.apiKey);
 	body.set('signature', signed.signature);
 	for (const [key, value] of Object.entries(signed.params)) body.set(key, String(value));
