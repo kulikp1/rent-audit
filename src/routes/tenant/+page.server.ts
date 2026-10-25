@@ -17,13 +17,18 @@ export const load: PageServerLoad = async ({ locals }) => {
 	);
 	const [meters, realtor, readings] = await Promise.all([
 		scope.meters.find({ apartmentId: apartment._id, active: true }).lean(),
-		User.findById(apartment.realtorId).select('name').lean(),
+		User.findById(apartment.realtorId).select('name picture avatarColor').lean(),
 		scope.readings.find({ leaseId: lease._id, period: currentPeriod() }).lean()
 	]);
 	const submitted = new Set(
 		readings
 			.filter((reading) => reading.status !== 'rejected')
 			.map((reading) => String(reading.meterId))
+	);
+	const readingByMeter = new Map(
+		readings
+			.filter((reading) => reading.status !== 'rejected')
+			.map((reading) => [String(reading.meterId), reading])
 	);
 	const rejected = new Map(
 		readings
@@ -36,6 +41,8 @@ export const load: PageServerLoad = async ({ locals }) => {
 			type: meter.type,
 			serial: meter.serial,
 			submitted: submitted.has(String(meter._id)),
+			sentAt: readingByMeter.get(String(meter._id))?.createdAt.toISOString() ?? null,
+			sentValues: readingByMeter.get(String(meter._id))?.values ?? null,
 			rejectReason: rejected.get(String(meter._id)) ?? null,
 			last: await latestValues(meter._id, meter.initialReading)
 		}))
@@ -50,12 +57,26 @@ export const load: PageServerLoad = async ({ locals }) => {
 		},
 		rentChange: pendingRentChange(apartment, lease._id),
 		realtorName: realtor?.name ?? '',
+		realtor: {
+			name: realtor?.name ?? '',
+			picture: realtor?.picture ?? '',
+			avatarColor: realtor?.avatarColor ?? 'blue'
+		},
 		meters: pending,
 		period: currentPeriod(),
 		openInvoices: {
 			count: openInvoices.length,
 			total: openInvoices.reduce((sum, invoice) => sum + invoice.total, 0),
-			overdue: openInvoices.some((invoice) => invoice.status === 'overdue')
+			overdue: openInvoices.filter((invoice) => invoice.status === 'overdue').length,
+			payout: openInvoices.find((invoice) => invoice.payout)?.payout ?? null,
+			items: openInvoices.map((invoice) => ({
+				id: invoice.id,
+				type: invoice.type,
+				period: invoice.period,
+				status: invoice.status,
+				total: invoice.total,
+				dueDate: invoice.dueDate
+			}))
 		}
 	};
 };
