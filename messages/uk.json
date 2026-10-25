@@ -210,6 +210,7 @@
 	"reading_digits_hint": "До {digits} цифр до коми",
 	"nav_settings": "Налаштування",
 	"settings_subtitle": "Профіль, вигляд, реквізити й графік нагадувань",
+	"settings_tenant_subtitle": "Профіль і вигляд",
 	"settings_payout_title": "Реквізити для оплати",
 	"settings_payout_text": "Орендарі бачитимуть їх у рахунках і платитимуть напряму на ваш рахунок.",
 	"settings_full_name": "ПІБ отримувача",

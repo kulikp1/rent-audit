@@ -210,6 +210,7 @@
 	"reading_digits_hint": "Up to {digits} digits before the decimal point",
 	"nav_settings": "Settings",
 	"settings_subtitle": "Profile, appearance, payment details and reminder schedule",
+	"settings_tenant_subtitle": "Profile and appearance",
 	"settings_payout_title": "Payment details",
 	"settings_payout_text": "Tenants will see them on invoices and pay straight to your account.",
 	"settings_full_name": "Recipient full name",
