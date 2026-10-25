@@ -8,6 +8,7 @@ import {
 	type CreateError
 } from '#lib/server/billing/invoices.js';
 import { previousPeriod } from '#lib/server/billing/calc.js';
+import { User } from '#lib/server/models/user.js';
 import { parseId, repo } from '#lib/server/repo.js';
 import { currentPeriod } from '#lib/utils/format.js';
 import type { Actions, PageServerLoad } from './$types';
@@ -21,9 +22,10 @@ const createSchema = z.object({
 export const load: PageServerLoad = async ({ locals }) => {
 	const user = requireRole(locals, 'realtor');
 	const scope = await repo(user.id);
-	const [invoices, leases] = await Promise.all([
+	const [invoices, leases, realtor] = await Promise.all([
 		scope.invoices.find().sort({ createdAt: -1 }).limit(200).lean(),
-		scope.leases.find({ endedAt: null }).lean()
+		scope.leases.find({ endedAt: null }).lean(),
+		User.findById(user.id).select('realtorProfile').lean()
 	]);
 	const rented = await scope.apartments
 		.find({ _id: { $in: leases.map((lease) => lease.apartmentId) } })
@@ -33,6 +35,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 	return {
 		invoices: await invoiceViews(scope, invoices),
 		apartments: rented.map((apartment) => ({ id: String(apartment._id), name: apartment.name })),
+		payoutReady: !!(realtor?.realtorProfile?.iban && realtor.realtorProfile.fullName),
 		defaults: { utilities: previousPeriod(), rent: currentPeriod() }
 	};
 };
