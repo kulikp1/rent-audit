@@ -16,6 +16,13 @@
 	--color-primary-800: #1e349c;
 	--color-primary-900: #1e317b;
 
+	--font-display: 'Unbounded Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+	--font-onest: 'Onest Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+	--font-tag: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+	--color-night-950: #05060c;
+	--color-night-700: #1a1c2b;
+
 	--color-canvas: #f6f7fb;
 	--color-surface: #ffffff;
 	--color-surface-muted: #f1f3f9;
