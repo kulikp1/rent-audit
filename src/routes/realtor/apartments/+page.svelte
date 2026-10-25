@@ -144,7 +144,7 @@
 								<td class="px-5 py-3.5">
 									<a
 										href={pathTo(`/realtor/apartments/${apartment.id}`)}
-										class="font-medium text-ink hover:text-primary-700"
+										class="font-medium text-ink hover:text-primary-ink"
 									>
 										{apartment.name}
 									</a>

@@ -20,10 +20,10 @@
 
 	const icons = { info: Info, warning: TriangleAlert, success: CircleCheck, danger: CircleAlert };
 	const tones = {
-		info: 'bg-info-50 text-info-600',
-		warning: 'bg-warning-50 text-warning-600',
-		success: 'bg-success-50 text-success-600',
-		danger: 'bg-danger-50 text-danger-600'
+		info: 'bg-info-50 text-info-ink',
+		warning: 'bg-warning-50 text-warning-ink',
+		success: 'bg-success-50 text-success-ink',
+		danger: 'bg-danger-50 text-danger-ink'
 	};
 
 	async function open(item: NotificationView, href: string) {

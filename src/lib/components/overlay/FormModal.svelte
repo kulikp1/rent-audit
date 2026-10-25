@@ -126,7 +126,7 @@
 		class="space-y-4 py-2"
 	>
 		{#if formError}
-			<div role="alert" class="rounded-control bg-danger-50 p-3 text-sm text-danger-700">
+			<div role="alert" class="rounded-control bg-danger-50 p-3 text-sm text-danger-ink">
 				{describeError ? describeError(formError, formDetail) : formError}
 			</div>
 		{/if}

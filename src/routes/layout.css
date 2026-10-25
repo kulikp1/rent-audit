@@ -33,6 +33,12 @@
 	--color-ink-muted: #6b7491;
 	--color-ink-faint: #98a0b8;
 
+	--color-primary-ink: #1e3bc2;
+	--color-success-ink: #166534;
+	--color-warning-ink: #92400e;
+	--color-danger-ink: #b91c1c;
+	--color-info-ink: #1d4ed8;
+
 	--color-success-50: #ecfdf3;
 	--color-success-600: #15803d;
 	--color-success-700: #166534;
@@ -78,6 +84,38 @@
 }
 
 @layer base {
+	:root[data-theme='dark'] {
+		color-scheme: dark;
+
+		--color-primary-50: #111a3b;
+		--color-primary-100: #19265c;
+		--color-primary-200: #25388a;
+		--color-primary-ink: #9db8ff;
+
+		--color-canvas: #05060c;
+		--color-surface: #0b0d16;
+		--color-surface-muted: #131625;
+		--color-line: #1c1f2f;
+		--color-line-strong: #2b3048;
+		--color-ink: #f2f4fb;
+		--color-ink-soft: #c5cadf;
+		--color-ink-muted: #8f96b2;
+		--color-ink-faint: #646b88;
+
+		--color-success-50: #0d2a1b;
+		--color-success-ink: #4ade80;
+		--color-warning-50: #2e2209;
+		--color-warning-ink: #fbbf24;
+		--color-danger-50: #301314;
+		--color-danger-ink: #f87171;
+		--color-info-50: #0f1d3a;
+		--color-info-ink: #7cb0ff;
+
+		--shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 1px 3px rgb(0 0 0 / 0.5);
+		--shadow-pop: 0 8px 24px rgb(0 0 0 / 0.55), 0 2px 6px rgb(0 0 0 / 0.4);
+		--shadow-dialog: 0 24px 64px rgb(0 0 0 / 0.7), 0 4px 12px rgb(0 0 0 / 0.5);
+	}
+
 	a[href],
 	button,
 	summary,

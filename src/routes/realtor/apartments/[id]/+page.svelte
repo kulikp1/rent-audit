@@ -83,9 +83,9 @@
 
 	const meterIcons = { water: Droplets, gas: Flame, electricity: Zap };
 	const meterTones = {
-		water: 'bg-info-50 text-info-600',
-		gas: 'bg-warning-50 text-warning-600',
-		electricity: 'bg-primary-50 text-primary-600'
+		water: 'bg-info-50 text-info-ink',
+		gas: 'bg-warning-50 text-warning-ink',
+		electricity: 'bg-primary-50 text-primary-ink'
 	};
 
 	function meterLabel(type: 'water' | 'gas' | 'electricity') {
@@ -176,7 +176,7 @@
 <div class="mb-6 flex flex-wrap items-start justify-between gap-4">
 	<div class="flex items-start gap-4">
 		<span
-			class="grid size-12 shrink-0 place-items-center rounded-card bg-primary-50 text-primary-600"
+			class="grid size-12 shrink-0 place-items-center rounded-card bg-primary-50 text-primary-ink"
 		>
 			<Building2 class="size-6" />
 		</span>
@@ -517,7 +517,7 @@
 						<p class="text-sm font-medium">{serviceLabel(item.service)}</p>
 						<a
 							href={pathTo(`/realtor/statistics?apartment=${item.apartmentId}`)}
-							class="text-[13px] font-medium text-primary-700 hover:underline"
+							class="text-[13px] font-medium text-primary-ink hover:underline"
 						>
 							{m.dashboard_anomalies_open()}
 						</a>

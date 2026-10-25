@@ -18,7 +18,7 @@
 >
 	<div class="flex items-start gap-4">
 		<span
-			class="grid size-10 shrink-0 place-items-center rounded-full bg-warning-600/15 text-warning-700"
+			class="grid size-10 shrink-0 place-items-center rounded-full bg-warning-600/15 text-warning-ink"
 		>
 			<TrendingUp class="size-5" />
 		</span>

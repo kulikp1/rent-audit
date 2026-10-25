@@ -2,6 +2,7 @@
 	import { BarController, BarElement, CategoryScale, Chart, LinearScale, Tooltip } from 'chart.js';
 
 	import { formatQuantity } from '#lib/utils/invoice.js';
+	import { theme } from '#lib/theme.svelte.js';
 
 	Chart.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip);
 
@@ -19,6 +20,12 @@
 
 	$effect(() => {
 		if (!canvas) return;
+		void theme.current;
+		const css = getComputedStyle(document.documentElement);
+		const muted = css.getPropertyValue('--color-ink-muted').trim();
+		const grid = css.getPropertyValue('--color-line').trim();
+		const bar = css.getPropertyValue('--color-primary-500').trim();
+		const danger = css.getPropertyValue('--color-danger-600').trim();
 		const chart = new Chart(canvas, {
 			type: 'bar',
 			data: {
@@ -27,7 +34,7 @@
 					{
 						label: name,
 						data: values,
-						backgroundColor: anomalies.map((flag) => (flag ? '#dc2626' : '#3b66f3')),
+						backgroundColor: anomalies.map((flag) => (flag ? danger : bar)),
 						borderRadius: 6,
 						maxBarThickness: 42
 					}
@@ -45,12 +52,12 @@
 					}
 				},
 				scales: {
-					x: { grid: { display: false }, ticks: { color: '#6b7491' } },
+					x: { grid: { display: false }, ticks: { color: muted } },
 					y: {
 						beginAtZero: true,
-						grid: { color: '#e4e7ef' },
+						grid: { color: grid },
 						border: { display: false },
-						ticks: { color: '#6b7491' }
+						ticks: { color: muted }
 					}
 				}
 			}

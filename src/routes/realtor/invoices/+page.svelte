@@ -130,7 +130,7 @@
 								<td class="px-5 py-3.5 whitespace-nowrap">
 									<a
 										href={pathTo(`/realtor/invoices/${invoice.id}`)}
-										class="font-medium text-ink hover:text-primary-700"
+										class="font-medium text-ink hover:text-primary-ink"
 									>
 										{invoice.number}
 									</a>
@@ -149,7 +149,7 @@
 										</p>
 									{/if}
 									{#if invoice.tenantPaidAt && invoice.status !== 'paid'}
-										<p class="mt-1 text-[12px] text-warning-700">{m.invoice_tenant_says_paid()}</p>
+										<p class="mt-1 text-[12px] text-warning-ink">{m.invoice_tenant_says_paid()}</p>
 									{/if}
 								</td>
 							</tr>
@@ -186,7 +186,7 @@
 									</span>
 								{/if}
 								{#if invoice.tenantPaidAt && invoice.status !== 'paid'}
-									<span class="text-[12px] text-warning-700">{m.invoice_tenant_says_paid()}</span>
+									<span class="text-[12px] text-warning-ink">{m.invoice_tenant_says_paid()}</span>
 								{/if}
 							</span>
 						</a>

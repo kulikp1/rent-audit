@@ -18,25 +18,25 @@
 			label: m.stat_apartments(),
 			value: data.stats.apartments,
 			icon: Building2,
-			tone: 'bg-primary-50 text-primary-600'
+			tone: 'bg-primary-50 text-primary-ink'
 		},
 		{
 			label: m.stat_readings_pending(),
 			value: data.stats.pendingReadings,
 			icon: ScanSearch,
-			tone: 'bg-warning-50 text-warning-600'
+			tone: 'bg-warning-50 text-warning-ink'
 		},
 		{
 			label: m.stat_invoices_unpaid(),
 			value: data.stats.unpaidInvoices,
 			icon: Receipt,
-			tone: 'bg-info-50 text-info-600'
+			tone: 'bg-info-50 text-info-ink'
 		},
 		{
 			label: m.stat_anomalies(),
 			value: data.stats.anomalies,
 			icon: TriangleAlert,
-			tone: 'bg-danger-50 text-danger-600'
+			tone: 'bg-danger-50 text-danger-ink'
 		}
 	]);
 </script>
@@ -71,7 +71,7 @@
 						</p>
 						<a
 							href={pathTo(`/realtor/statistics?apartment=${item.apartmentId}`)}
-							class="text-[13px] font-medium text-primary-700 hover:underline"
+							class="text-[13px] font-medium text-primary-ink hover:underline"
 						>
 							{m.dashboard_anomalies_open()}
 						</a>

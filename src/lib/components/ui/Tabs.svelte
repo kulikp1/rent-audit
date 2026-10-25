@@ -14,7 +14,7 @@
 			aria-current={tab.id === active ? 'page' : undefined}
 			class="-mb-px border-b-2 px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-colors {tab.id ===
 			active
-				? 'border-primary-600 text-primary-700'
+				? 'border-primary-600 text-primary-ink'
 				: 'border-transparent text-ink-muted hover:text-ink'}"
 		>
 			{tab.label}

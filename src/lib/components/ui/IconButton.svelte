@@ -24,7 +24,7 @@
 	title={label}
 	class="grid size-9 place-items-center rounded-control transition-colors disabled:cursor-not-allowed disabled:opacity-40 {tone ===
 	'danger'
-		? 'text-ink-muted hover:bg-danger-50 hover:text-danger-600'
+		? 'text-ink-muted hover:bg-danger-50 hover:text-danger-ink'
 		: 'text-ink-muted hover:bg-surface-muted hover:text-ink'} {className}"
 	{...rest}
 >

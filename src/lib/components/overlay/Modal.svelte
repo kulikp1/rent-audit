@@ -94,7 +94,7 @@
 	onkeydown={handleKeydown}
 	class="m-auto w-[calc(100%-2rem)] {widths[
 		size
-	]} rounded-dialog border border-line bg-surface p-0 text-ink shadow-dialog backdrop:bg-ink/40 backdrop:backdrop-blur-[2px] open:animate-pop-in"
+	]} rounded-dialog border border-line bg-surface p-0 text-ink shadow-dialog backdrop:bg-night-950/60 backdrop:backdrop-blur-[2px] open:animate-pop-in"
 >
 	<div class="flex max-h-[calc(100dvh-4rem)] flex-col">
 		<header class="flex items-start justify-between gap-4 px-6 pt-5 pb-3">

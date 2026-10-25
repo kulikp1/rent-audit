@@ -28,7 +28,7 @@
 		data-autofocus
 		onclick={copy}
 		class="inline-flex h-10 shrink-0 items-center gap-2 rounded-control px-4 text-sm font-medium transition-colors {copied
-			? 'bg-success-50 text-success-700'
+			? 'bg-success-50 text-success-ink'
 			: 'bg-primary-600 text-white hover:bg-primary-700'}"
 	>
 		{#if copied}<Check class="size-4" />{m.common_copied()}{:else}<Copy

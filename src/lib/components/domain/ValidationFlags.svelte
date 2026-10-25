@@ -22,7 +22,7 @@
 	<ul class="space-y-2">
 		{#each flags as flag (flag)}
 			<li
-				class="flex items-start gap-2.5 rounded-control bg-warning-50 px-3 py-2 text-sm text-warning-700"
+				class="flex items-start gap-2.5 rounded-control bg-warning-50 px-3 py-2 text-sm text-warning-ink"
 			>
 				<TriangleAlert class="mt-0.5 size-4 shrink-0" />
 				{text(flag)}

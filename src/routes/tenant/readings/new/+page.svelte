@@ -39,7 +39,7 @@
 {#if data.meters.length === 0}
 	<Card>
 		<div class="flex items-center gap-3 text-sm text-ink-soft">
-			<CircleCheck class="size-5 text-success-600" />
+			<CircleCheck class="size-5 text-success-ink" />
 			{m.tenant_readings_all_sent()}
 		</div>
 	</Card>
@@ -58,7 +58,7 @@
 		{#if form?.formError === 'nothing'}
 			<div
 				role="alert"
-				class="flex items-start gap-3 rounded-control bg-danger-50 p-3.5 text-sm text-danger-700"
+				class="flex items-start gap-3 rounded-control bg-danger-50 p-3.5 text-sm text-danger-ink"
 			>
 				<CircleAlert class="mt-0.5 size-4 shrink-0" />
 				{m.tenant_readings_nothing()}

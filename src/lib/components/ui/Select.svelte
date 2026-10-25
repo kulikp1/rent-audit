@@ -149,11 +149,11 @@
 			data-value={option.value}
 			onclick={() => choose(option.value)}
 			class="flex w-full cursor-pointer items-center justify-between gap-6 rounded-lg px-3 py-2 text-left text-sm transition-colors hover:bg-surface-muted focus:bg-surface-muted focus:outline-none {active
-				? 'font-medium text-primary-700'
+				? 'font-medium text-primary-ink'
 				: 'text-ink'}"
 		>
 			{option.label}
-			{#if active}<Check class="size-4 text-primary-600" />{/if}
+			{#if active}<Check class="size-4 text-primary-ink" />{/if}
 		</button>
 	{/each}
 </div>

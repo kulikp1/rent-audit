@@ -90,7 +90,7 @@
 								</div>
 							</div>
 							{#if meter.submitted}
-								<CircleCheck class="size-5 text-success-600" />
+								<CircleCheck class="size-5 text-success-ink" />
 							{:else if meter.rejectReason}
 								<Badge tone="danger">{m.reading_rejected()}</Badge>
 							{/if}

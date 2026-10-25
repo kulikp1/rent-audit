@@ -29,9 +29,9 @@
 	});
 
 	const tones = {
-		success: { icon: CircleCheck, color: 'text-success-600' },
-		error: { icon: CircleAlert, color: 'text-danger-600' },
-		info: { icon: Info, color: 'text-info-600' }
+		success: { icon: CircleCheck, color: 'text-success-ink' },
+		error: { icon: CircleAlert, color: 'text-danger-ink' },
+		info: { icon: Info, color: 'text-info-ink' }
 	};
 	const tone = $derived(tones[item.tone]);
 </script>

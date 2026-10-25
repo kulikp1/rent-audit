@@ -10,6 +10,7 @@
 	import Logo from '../ui/Logo.svelte';
 	import Menu from '../overlay/Menu.svelte';
 	import LocaleSwitcher from './LocaleSwitcher.svelte';
+	import ThemeSwitcher from './ThemeSwitcher.svelte';
 	import NotificationBell from './NotificationBell.svelte';
 	import { navByRole } from './nav';
 
@@ -83,7 +84,7 @@
 		<button
 			type="button"
 			aria-label={m.menu_close()}
-			class="fixed inset-0 z-30 animate-fade-in bg-ink/40 backdrop-blur-[2px] lg:hidden"
+			class="fixed inset-0 z-30 animate-fade-in bg-night-950/60 backdrop-blur-[2px] lg:hidden"
 			onclick={() => (mobileOpen = false)}
 		></button>
 	{/if}
@@ -103,7 +104,7 @@
 				<button
 					type="button"
 					class="hidden size-9 place-items-center rounded-control text-ink-muted hover:bg-surface-muted lg:grid {pinned
-						? 'text-primary-600'
+						? 'text-primary-ink'
 						: ''}"
 					aria-label={pinned ? m.sidebar_unpin() : m.sidebar_pin()}
 					aria-pressed={pinned}
@@ -132,11 +133,11 @@
 					onclick={() => (mobileOpen = false)}
 					title={expanded ? undefined : item.label()}
 					class="relative flex min-h-10 items-center gap-3 rounded-control px-3 py-2.5 text-sm font-medium whitespace-nowrap transition-colors {active
-						? 'bg-primary-50 text-primary-700'
+						? 'bg-primary-50 text-primary-ink'
 						: 'text-ink-soft hover:bg-surface-muted hover:text-ink'}"
 				>
 					<item.icon
-						class="size-[18px] shrink-0 {active ? 'text-primary-600' : 'text-ink-faint'}"
+						class="size-[18px] shrink-0 {active ? 'text-primary-ink' : 'text-ink-faint'}"
 					/>
 					<span class="flex-1 {expanded ? '' : 'lg:hidden'}">{item.label()}</span>
 					{#if item.badge && badges[item.badge]}
@@ -178,6 +179,7 @@
 			{#if role && notifications}
 				<NotificationBell unread={notifications.unread} recent={notifications.recent} {role} />
 			{/if}
+			<ThemeSwitcher />
 			<LocaleSwitcher />
 			<Menu
 				label={user.name}

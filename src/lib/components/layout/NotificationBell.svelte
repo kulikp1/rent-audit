@@ -67,7 +67,7 @@
 			<button
 				type="button"
 				onclick={markAll}
-				class="text-[13px] font-medium text-primary-700 hover:underline"
+				class="text-[13px] font-medium text-primary-ink hover:underline"
 			>
 				{m.notif_mark_all()}
 			</button>
@@ -79,7 +79,7 @@
 	<a
 		href={pathTo(`/${role}/notifications`)}
 		onclick={() => panel?.hidePopover()}
-		class="block border-t border-line px-4 py-3 text-center text-sm font-medium text-primary-700 hover:bg-surface-muted"
+		class="block border-t border-line px-4 py-3 text-center text-sm font-medium text-primary-ink hover:bg-surface-muted"
 	>
 		{m.notif_all()}
 	</a>

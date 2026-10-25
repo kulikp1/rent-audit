@@ -11,7 +11,7 @@
 
 <div class="flex flex-col items-center px-6 py-14 text-center">
 	{#if icon}
-		<div class="mb-4 grid size-12 place-items-center rounded-full bg-primary-50 text-primary-600">
+		<div class="mb-4 grid size-12 place-items-center rounded-full bg-primary-50 text-primary-ink">
 			{@render icon()}
 		</div>
 	{/if}

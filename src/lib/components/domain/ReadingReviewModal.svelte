@@ -131,7 +131,7 @@
 				</div>
 
 				{#if reading.rejectReason}
-					<p class="text-sm text-danger-700">
+					<p class="text-sm text-danger-ink">
 						{m.reading_reject_reason({ reason: reading.rejectReason })}
 					</p>
 				{/if}

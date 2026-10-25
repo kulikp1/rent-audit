@@ -41,7 +41,7 @@
 			{#if data.error}
 				<div
 					role="alert"
-					class="mt-6 flex items-start gap-3 rounded-control border border-danger-600/20 bg-danger-50 p-3.5 text-sm text-danger-700"
+					class="mt-6 flex items-start gap-3 rounded-control border border-danger-600/20 bg-danger-50 p-3.5 text-sm text-danger-ink"
 				>
 					<CircleAlert class="mt-0.5 size-4 shrink-0" />
 					<span>{errorText()}</span>
@@ -60,7 +60,7 @@
 				</div>
 
 				{#if form?.error}
-					<p role="alert" class="mt-4 text-sm text-danger-600">{errorText()}</p>
+					<p role="alert" class="mt-4 text-sm text-danger-ink">{errorText()}</p>
 				{/if}
 
 				<form

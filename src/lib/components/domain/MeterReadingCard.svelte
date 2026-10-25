@@ -109,7 +109,7 @@
 
 	{#if rejectReason}
 		<div
-			class="mt-4 flex items-start gap-3 rounded-control bg-warning-50 p-3 text-sm text-warning-700"
+			class="mt-4 flex items-start gap-3 rounded-control bg-warning-50 p-3 text-sm text-warning-ink"
 		>
 			<CircleAlert class="mt-0.5 size-4 shrink-0" />
 			<span>{m.reading_rejected_note({ reason: rejectReason })}</span>
@@ -154,7 +154,7 @@
 		{#if showFields}
 			{#if notice}
 				<div
-					class="mb-4 flex items-start gap-3 rounded-control bg-warning-50 p-3 text-sm text-warning-700"
+					class="mb-4 flex items-start gap-3 rounded-control bg-warning-50 p-3 text-sm text-warning-ink"
 				>
 					<CircleAlert class="mt-0.5 size-4 shrink-0" />
 					<span>{notice}</span>
@@ -171,7 +171,7 @@
 				</div>
 				{#each warnings as warning (warning)}
 					<div
-						class="mb-3 flex items-start gap-3 rounded-control bg-warning-50 p-3 text-sm text-warning-700"
+						class="mb-3 flex items-start gap-3 rounded-control bg-warning-50 p-3 text-sm text-warning-ink"
 					>
 						<CircleAlert class="mt-0.5 size-4 shrink-0" />
 						<span>{warning}</span>

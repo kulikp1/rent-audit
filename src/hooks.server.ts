@@ -4,6 +4,8 @@ import { getTextDirection } from '#lib/paraglide/runtime.js';
 import { paraglideMiddleware } from '#lib/paraglide/server.js';
 import { resolveSession } from '#lib/server/auth/session.js';
 
+const THEME_COOKIE = 'ra_theme';
+
 const handleParaglide: Handle = ({ event, resolve }) =>
 	paraglideMiddleware(event.request, ({ request, locale }) =>
 		resolve(
@@ -13,6 +15,7 @@ const handleParaglide: Handle = ({ event, resolve }) =>
 					html
 						.replace('%paraglide.lang%', locale)
 						.replace('%paraglide.dir%', getTextDirection(locale))
+						.replace('%app.theme%', event.cookies.get(THEME_COOKIE) === 'light' ? 'light' : 'dark')
 			}
 		)
 	);

@@ -16,7 +16,7 @@
 </script>
 
 <span
-	class="inline-grid shrink-0 place-items-center overflow-hidden rounded-full bg-primary-100 font-semibold text-primary-700 {size ===
+	class="inline-grid shrink-0 place-items-center overflow-hidden rounded-full bg-primary-100 font-semibold text-primary-ink {size ===
 	'sm'
 		? 'size-8 text-xs'
 		: 'size-9 text-[13px]'}"

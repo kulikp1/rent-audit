@@ -13,9 +13,9 @@
 
 	const icons = { water: Droplets, gas: Flame, electricity: Zap };
 	const tones = {
-		water: 'bg-info-50 text-info-600',
-		gas: 'bg-warning-50 text-warning-600',
-		electricity: 'bg-primary-50 text-primary-600'
+		water: 'bg-info-50 text-info-ink',
+		gas: 'bg-warning-50 text-warning-ink',
+		electricity: 'bg-primary-50 text-primary-ink'
 	};
 	const Icon = $derived(icons[type]);
 	const title = $derived(

@@ -10,6 +10,8 @@
 	"common_back": "Назад",
 	"common_loading": "Завантаження…",
 	"common_language": "Мова",
+	"theme_switch_light": "Світла тема",
+	"theme_switch_dark": "Темна тема",
 	"login_title": "Вхід до RentAudit",
 	"login_subtitle": "Увійдіть за допомогою Google-акаунта. Окремий пароль не потрібен.",
 	"login_google": "Увійти через Google",

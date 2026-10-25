@@ -160,7 +160,7 @@
 
 {#if draft && !data.payoutReady}
 	<div
-		class="mb-6 flex items-start gap-3 rounded-control bg-warning-50 p-4 text-sm text-warning-700"
+		class="mb-6 flex items-start gap-3 rounded-control bg-warning-50 p-4 text-sm text-warning-ink"
 	>
 		<CircleAlert class="mt-0.5 size-4 shrink-0" />
 		<span>
@@ -171,7 +171,7 @@
 {/if}
 
 {#if open && invoice.tenantPaidAt}
-	<div class="mb-6 flex items-start gap-3 rounded-control bg-info-50 p-4 text-sm text-info-700">
+	<div class="mb-6 flex items-start gap-3 rounded-control bg-info-50 p-4 text-sm text-info-ink">
 		<CircleAlert class="mt-0.5 size-4 shrink-0" />
 		{m.invoice_tenant_paid_notice({ date: formatDate(invoice.tenantPaidAt) })}
 	</div>
@@ -185,7 +185,7 @@
 			<p class="mt-2">
 				<a
 					href={pathTo(`/realtor/invoices/${data.replacedBy.id}`)}
-					class="font-medium text-primary-700 hover:underline"
+					class="font-medium text-primary-ink hover:underline"
 				>
 					{m.invoice_replaced_by({ number: data.replacedBy.number })}
 				</a>
@@ -198,7 +198,7 @@
 	<p class="mb-6 text-sm text-ink-muted">
 		<a
 			href={pathTo(`/realtor/invoices/${data.replaces.id}`)}
-			class="font-medium text-primary-700 hover:underline"
+			class="font-medium text-primary-ink hover:underline"
 		>
 			{m.invoice_replaces({ number: data.replaces.number })}
 		</a>

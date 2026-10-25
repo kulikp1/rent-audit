@@ -27,7 +27,7 @@
 {#if sent}
 	<div
 		role="status"
-		class="mb-6 flex items-center gap-3 rounded-control border border-success-600/20 bg-success-50 p-3.5 text-sm text-success-700"
+		class="mb-6 flex items-center gap-3 rounded-control border border-success-600/20 bg-success-50 p-3.5 text-sm text-success-ink"
 	>
 		<CircleCheck class="size-5 shrink-0" />
 		{m.tenant_readings_sent()}

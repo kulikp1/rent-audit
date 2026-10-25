@@ -68,7 +68,7 @@
 							</p>
 							<a
 								href={pathTo(`/realtor/statistics?apartment=${item.apartmentId}`)}
-								class="text-[13px] font-medium text-primary-700 hover:underline"
+								class="text-[13px] font-medium text-primary-ink hover:underline"
 							>
 								{m.dashboard_anomalies_open()}
 							</a>

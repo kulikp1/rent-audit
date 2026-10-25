@@ -105,7 +105,7 @@
 				href={pathTo(item.href)}
 				onclick={() => popoverEl?.hidePopover()}
 				class="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-sm transition-colors focus:outline-none {danger
-					? 'text-danger-600 hover:bg-danger-50 focus:bg-danger-50'
+					? 'text-danger-ink hover:bg-danger-50 focus:bg-danger-50'
 					: 'text-ink hover:bg-surface-muted focus:bg-surface-muted'}"
 			>
 				{#if item.icon}<item.icon class="size-4 opacity-70" />{/if}
@@ -117,7 +117,7 @@
 				role="menuitem"
 				onclick={() => select(item)}
 				class="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-sm transition-colors focus:outline-none {danger
-					? 'text-danger-600 hover:bg-danger-50 focus:bg-danger-50'
+					? 'text-danger-ink hover:bg-danger-50 focus:bg-danger-50'
 					: 'text-ink hover:bg-surface-muted focus:bg-surface-muted'}"
 			>
 				{#if item.icon}<item.icon class="size-4 opacity-70" />{/if}

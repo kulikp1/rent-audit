@@ -69,7 +69,7 @@
 {#if open && invoice.dueDate}
 	<p
 		class="mb-6 text-sm {invoice.status === 'overdue'
-			? 'font-medium text-danger-600'
+			? 'font-medium text-danger-ink'
 			: 'text-ink-soft'}"
 	>
 		{invoice.status === 'overdue'
@@ -93,7 +93,7 @@
 		{#if open}
 			<Card>
 				{#if invoice.tenantPaidAt}
-					<p class="flex items-start gap-2.5 text-sm text-success-700">
+					<p class="flex items-start gap-2.5 text-sm text-success-ink">
 						<CircleCheck class="mt-0.5 size-4 shrink-0" />
 						{m.tenant_paid_sent({ date: formatDate(invoice.tenantPaidAt) })}
 					</p>

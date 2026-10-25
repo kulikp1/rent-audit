@@ -20,7 +20,7 @@
 
 <div class="grid min-h-dvh place-items-center px-6">
 	<div class="text-center">
-		<p class="text-6xl font-semibold tracking-tight text-primary-600">{status}</p>
+		<p class="text-6xl font-semibold tracking-tight text-primary-ink">{status}</p>
 		<h1 class="mt-4 text-xl font-semibold text-ink">{title}</h1>
 		<p class="mx-auto mt-2 max-w-sm text-sm text-ink-muted">{text}</p>
 		<div class="mt-8"><Button href="/">{m.error_go_home()}</Button></div>

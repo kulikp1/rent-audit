@@ -10,6 +10,8 @@
 	"common_back": "Back",
 	"common_loading": "Loading…",
 	"common_language": "Language",
+	"theme_switch_light": "Light theme",
+	"theme_switch_dark": "Dark theme",
 	"login_title": "Sign in to RentAudit",
 	"login_subtitle": "Sign in with your Google account. No separate password is needed.",
 	"login_google": "Sign in with Google",

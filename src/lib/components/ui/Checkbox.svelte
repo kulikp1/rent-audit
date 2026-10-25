@@ -9,7 +9,7 @@
 <label class="flex cursor-pointer items-start gap-3 {className}">
 	<input
 		type="checkbox"
-		class="mt-0.5 size-4 rounded border-line-strong text-primary-600 focus:ring-primary-500/30"
+		class="mt-0.5 size-4 rounded border-line-strong text-primary-ink focus:ring-primary-500/30"
 		{...rest}
 	/>
 	<span>

@@ -24,11 +24,11 @@
 
 <div class="space-y-1.5">
 	<label for={id} class="block text-sm font-medium text-ink-soft">
-		{label}{#if required}<span class="ml-0.5 text-danger-600" aria-hidden="true">*</span>{/if}
+		{label}{#if required}<span class="ml-0.5 text-danger-ink" aria-hidden="true">*</span>{/if}
 	</label>
 	{@render children({ id, invalid: !!error, describedby })}
 	{#if error}
-		<p id="{id}-error" class="text-[13px] text-danger-600">{error}</p>
+		<p id="{id}-error" class="text-[13px] text-danger-ink">{error}</p>
 	{:else if hint}
 		<p id="{id}-hint" class="text-[13px] text-ink-muted">{hint}</p>
 	{/if}

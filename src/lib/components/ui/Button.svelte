@@ -32,7 +32,7 @@
 
 	const variants: Record<Variant, string> = {
 		primary:
-			'bg-primary-600 text-white shadow-sm hover:bg-primary-700 active:bg-primary-800 disabled:bg-primary-300',
+			'bg-primary-600 text-white shadow-sm hover:bg-primary-700 active:bg-primary-800 disabled:bg-primary-600/40',
 		secondary:
 			'bg-surface text-ink border border-line-strong shadow-sm hover:bg-surface-muted active:bg-line disabled:text-ink-faint',
 		danger:
