@@ -177,9 +177,7 @@
 								<div class="min-w-0">
 									<p class="flex items-baseline gap-2 text-sm font-semibold">
 										{labels[meter.type]}
-										<span class="font-mono text-[11px] font-normal text-ink-muted"
-											>{meter.serial}</span
-										>
+										<span class=" text-[11px] font-normal text-ink-muted">{meter.serial}</span>
 									</p>
 									<p class="text-[13px] text-ink-muted">
 										{#if meter.submitted && meter.sentAt && meter.sentValues}
@@ -247,7 +245,7 @@
 							</span>
 						{/if}
 					</div>
-					<p class="relative font-mono text-2xl font-bold tracking-tight tabular-nums">
+					<p class="relative text-2xl font-bold tracking-tight tabular-nums">
 						{formatMoney(data.openInvoices.total)}
 					</p>
 					<div class="relative mt-2.5 space-y-1.5">
@@ -267,7 +265,7 @@
 										</p>
 									{/if}
 								</div>
-								<span class="font-mono text-sm font-bold whitespace-nowrap tabular-nums">
+								<span class=" text-sm font-bold whitespace-nowrap tabular-nums">
 									{formatMoney(invoice.total)}
 								</span>
 							</div>
@@ -282,7 +280,7 @@
 								<p class="text-[11px] text-white/75">
 									{m.tenant_iban_label({ name: payout.fullName })}
 								</p>
-								<p class="mt-0.5 font-mono text-[11px] font-semibold tracking-wide break-all">
+								<p class="mt-0.5 text-[11px] font-semibold tracking-wide break-all">
 									{groupIban(payout.iban)}
 								</p>
 							</div>
@@ -316,7 +314,7 @@
 				<div class="mt-2.5 grid grid-cols-2 gap-2.5">
 					<div class="rounded-control border border-line bg-canvas px-3 py-2">
 						<p class="text-[11px] text-ink-muted">{m.apt_rent_label()}</p>
-						<p class="mt-1 font-mono text-base font-bold tabular-nums">
+						<p class="mt-1 text-base font-bold tabular-nums">
 							{formatMoney(data.apartment.rentAmount)}
 						</p>
 					</div>

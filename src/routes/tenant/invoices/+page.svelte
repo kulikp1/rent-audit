@@ -73,7 +73,7 @@
 			<h2 class="text-sm font-semibold text-ink">{m.tenant_invoices_to_pay()}</h2>
 			<p class="text-xs text-ink-muted">
 				{m.tenant_invoices_total()}
-				<span class="font-mono font-bold text-ink">{formatMoney(openTotal)}</span>
+				<span class=" font-bold text-ink">{formatMoney(openTotal)}</span>
 			</p>
 		</div>
 		<div class="grid gap-3 md:grid-cols-2">
@@ -102,7 +102,7 @@
 							>
 								{typeLabel(invoice.type)} · {formatPeriod(invoice.period)}
 							</a>
-							<p class="mt-0.5 font-mono text-[11px] text-ink-muted">
+							<p class="mt-0.5 text-[11px] text-ink-muted">
 								{invoice.number}
 								{#if invoice.dueDate}
 									· {overdue
@@ -114,7 +114,7 @@
 						<Badge tone={statusTone(invoice.status)}>{statusLabel(invoice.status)}</Badge>
 					</div>
 					<div class="mt-3 flex items-center justify-between gap-3">
-						<p class="font-mono text-2xl font-bold tracking-tight tabular-nums">
+						<p class=" text-2xl font-bold tracking-tight tabular-nums">
 							{formatMoney(invoice.total)}
 						</p>
 						{#if invoice.tenantPaidAt}
@@ -188,10 +188,10 @@
 								<p class="truncate text-sm font-semibold text-ink">
 									{typeLabel(invoice.type)} · {formatPeriod(invoice.period)}
 								</p>
-								<p class="font-mono text-[11px] text-ink-muted">{invoice.number}</p>
+								<p class=" text-[11px] text-ink-muted">{invoice.number}</p>
 							</div>
 							<Badge tone={statusTone(invoice.status)}>{statusLabel(invoice.status)}</Badge>
-							<span class="w-28 text-right font-mono text-sm font-bold tabular-nums">
+							<span class="w-28 text-right text-sm font-bold tabular-nums">
 								{formatMoney(invoice.total)}
 							</span>
 						</a>
@@ -207,7 +207,7 @@
 							period: formatPeriod(earliestPaid).toLocaleLowerCase(intlLocale)
 						})}</span
 					>
-					<span class="font-mono text-sm font-bold text-ink tabular-nums">
+					<span class=" text-sm font-bold text-ink tabular-nums">
 						{formatMoney(paidTotal)}
 					</span>
 				</div>

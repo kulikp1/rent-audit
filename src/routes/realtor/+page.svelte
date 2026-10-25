@@ -262,7 +262,7 @@
 								<div class="rounded-control border border-line bg-canvas px-3 py-2.5">
 									<p class="text-[11px] leading-tight text-ink-muted">{metric.label}</p>
 									<p
-										class="mt-1.5 font-mono text-lg font-bold tabular-nums {metric.hot
+										class="mt-1.5 text-lg font-bold tabular-nums {metric.hot
 											? 'text-danger-ink'
 											: 'text-ink'}"
 									>

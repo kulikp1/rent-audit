@@ -37,7 +37,7 @@
 	<div class="min-w-0 flex-1">
 		<div class="flex flex-wrap items-baseline justify-between gap-x-4">
 			<p class="text-base font-semibold">{title}</p>
-			<p class="font-mono text-[11px] text-ink-muted">{m.meter_serial_short({ serial })}</p>
+			<p class=" text-[11px] text-ink-muted">{m.meter_serial_short({ serial })}</p>
 		</div>
 		{#if previous && previous.length > 0}
 			<p class="mt-0.5 text-[13px] text-ink-muted">

@@ -28,7 +28,7 @@
 		const grid = css.getPropertyValue('--color-line').trim();
 		const bar = css.getPropertyValue('--color-primary-500').trim();
 		const danger = css.getPropertyValue('--color-danger-ink').trim();
-		const mono = 'ui-monospace, SFMono-Regular, Menlo, monospace';
+		const sans = css.getPropertyValue('--font-sans').trim();
 
 		const badges: Plugin<'bar'> = {
 			id: 'anomalyBadges',
@@ -38,7 +38,7 @@
 					if (!anomalies[index]) return;
 					const text = formatQuantity(values[index]!);
 					ctx.save();
-					ctx.font = `700 11px ${mono}`;
+					ctx.font = `700 11px ${sans}`;
 					const width = ctx.measureText(text).width + 14;
 					const x = element.x - width / 2;
 					const y = element.y - 26;
@@ -89,7 +89,7 @@
 						ticks: {
 							color: (context) => (anomalies[context.index] ? strong : muted),
 							font: (context) => ({
-								family: mono,
+								family: sans,
 								size: 11,
 								weight: anomalies[context.index] ? 'bold' : 'normal'
 							})
@@ -99,7 +99,7 @@
 						beginAtZero: true,
 						grid: { color: grid },
 						border: { display: false },
-						ticks: { color: muted, font: { family: mono, size: 11 } }
+						ticks: { color: muted, font: { family: sans, size: 11 } }
 					}
 				}
 			}

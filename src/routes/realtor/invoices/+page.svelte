@@ -239,7 +239,7 @@
 				>
 					<span class="size-2 rounded-full {card.dot}"></span>{card.label}
 				</span>
-				<span class="mt-2 block font-mono text-2xl font-bold tracking-tight tabular-nums">
+				<span class="mt-2 block text-2xl font-bold tracking-tight tabular-nums">
 					{formatMoney(card.total)}
 				</span>
 				<span class="mt-1 block text-xs {card.primary ? 'text-white/80' : 'text-ink-muted'}">
@@ -319,7 +319,7 @@
 								<td class="px-5 py-3.5 whitespace-nowrap">
 									<a
 										href={pathTo(`/realtor/invoices/${invoice.id}`)}
-										class="font-mono text-[13px] font-bold text-ink hover:text-primary-ink"
+										class=" text-[13px] font-bold text-ink hover:text-primary-ink"
 									>
 										{invoice.number}
 									</a>
@@ -346,7 +346,7 @@
 									{formatPeriod(invoice.period)}
 								</td>
 								<td
-									class="px-5 py-3.5 text-right font-mono font-bold whitespace-nowrap tabular-nums {cancelled
+									class="px-5 py-3.5 text-right font-bold whitespace-nowrap tabular-nums {cancelled
 										? 'line-through'
 										: ''}"
 								>
@@ -398,9 +398,7 @@
 						>
 							<span class="flex items-start justify-between gap-3">
 								<span class="min-w-0">
-									<span class="block font-mono text-[13px] font-bold text-ink"
-										>{invoice.number}</span
-									>
+									<span class="block text-[13px] font-bold text-ink">{invoice.number}</span>
 									<span class="mt-0.5 block text-[13px] text-ink-muted">
 										{typeLabel(invoice.type)} · {formatPeriod(invoice.period)}
 									</span>
@@ -408,7 +406,7 @@
 										>{invoice.apartmentName}</span
 									>
 								</span>
-								<span class="font-mono text-base font-bold whitespace-nowrap tabular-nums">
+								<span class=" text-base font-bold whitespace-nowrap tabular-nums">
 									{formatMoney(invoice.total)}
 								</span>
 							</span>

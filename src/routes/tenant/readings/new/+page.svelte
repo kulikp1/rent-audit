@@ -173,7 +173,7 @@
 				{#each tips as tip, index (tip[0])}
 					<li class="flex gap-3">
 						<span
-							class="grid size-6 shrink-0 place-items-center rounded-md border border-line bg-canvas font-mono text-[11px] font-bold text-ink-soft"
+							class="grid size-6 shrink-0 place-items-center rounded-md border border-line bg-canvas text-[11px] font-bold text-ink-soft"
 						>
 							{index + 1}
 						</span>

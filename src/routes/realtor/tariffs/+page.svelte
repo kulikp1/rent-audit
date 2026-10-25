@@ -212,7 +212,7 @@
 							<p class="text-xs text-ink-muted">
 								{section.service === 'electricity' ? m.tariff_day() : m.tariff_price()}
 							</p>
-							<p class="mt-1 font-mono text-4xl font-bold tracking-tight tabular-nums">
+							<p class="mt-1 text-4xl font-bold tracking-tight tabular-nums">
 								{money(section.current.price)}
 							</p>
 							<p class="mt-1 text-[11px] text-ink-muted">{m.tariff_unit_per({ unit })}</p>
@@ -220,7 +220,7 @@
 						{#if section.service === 'electricity'}
 							<div>
 								<p class="text-xs text-ink-muted">{m.tariff_night()}</p>
-								<p class="mt-1 font-mono text-4xl font-bold tracking-tight tabular-nums">
+								<p class="mt-1 text-4xl font-bold tracking-tight tabular-nums">
 									{money(section.current.nightPrice ?? section.current.price)}
 								</p>
 								<p class="mt-1 text-[11px] text-ink-muted">{m.tariff_unit_per({ unit })}</p>
@@ -275,11 +275,11 @@
 								bind:value={quantities[row.key]}
 								inputmode="decimal"
 								aria-label={row.label}
-								class="w-full min-w-0 border-0 bg-transparent p-0 font-mono text-2xl font-bold text-ink tabular-nums focus:ring-0 focus:outline-none"
+								class="w-full min-w-0 border-0 bg-transparent p-0 text-2xl font-bold text-ink tabular-nums focus:ring-0 focus:outline-none"
 							/>
 							<span class="shrink-0 text-[11px] text-ink-muted">{row.unit}</span>
 						</span>
-						<span class="mt-2 block font-mono text-xs font-semibold text-ink-soft tabular-nums">
+						<span class="mt-2 block text-xs font-semibold text-ink-soft tabular-nums">
 							= {money(row.sum)} ₴
 						</span>
 					</label>
@@ -289,7 +289,7 @@
 
 		<div class="flex flex-col justify-center rounded-card bg-primary-500 p-5 text-white">
 			<p class="text-sm text-white/85">{m.tariff_calc_total()}</p>
-			<p class="mt-2 font-mono text-4xl font-bold tracking-tight tabular-nums">
+			<p class="mt-2 text-4xl font-bold tracking-tight tabular-nums">
 				{money(calcTotal)} <span class="text-lg">₴</span>
 			</p>
 			<div class="mt-4 flex h-2 overflow-hidden rounded-full bg-white/20">

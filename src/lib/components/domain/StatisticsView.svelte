@@ -126,7 +126,7 @@
 		<Card class="p-5" padded={false}>
 			<div class="mb-4 flex items-baseline justify-between">
 				<h2 class="text-base font-semibold">{serviceLabel(active.service)}</h2>
-				<span class="font-mono text-xs text-ink-muted">{unit}</span>
+				<span class=" text-xs text-ink-muted">{unit}</span>
 			</div>
 			<ConsumptionChart
 				name={serviceLabel(active.service)}
@@ -143,7 +143,7 @@
 					<div class="rounded-card border border-line bg-surface px-4 py-3">
 						<p class="text-xs text-ink-muted">{tile.label}</p>
 						<p
-							class="mt-1 font-mono text-xl font-bold tracking-tight tabular-nums {tile.hot
+							class="mt-1 text-xl font-bold tracking-tight tabular-nums {tile.hot
 								? 'text-danger-ink'
 								: 'text-ink'}"
 						>
@@ -164,7 +164,7 @@
 									class="flex items-center justify-between gap-2 text-xs font-semibold text-danger-ink"
 								>
 									<span>{formatPeriod(point.period)}</span>
-									<span class="font-mono">{formatQuantity(point.value)} {unit}</span>
+									<span class="">{formatQuantity(point.value)} {unit}</span>
 								</div>
 								<div class="mt-1.5 text-[13px]">
 									<AnomalyReasons reasons={point.reasons} {unit} showBadge={false} />

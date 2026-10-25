@@ -169,7 +169,7 @@
 		{#each [{ label: m.apartments_stat_total(), value: String(data.apartments.length) }, { label: m.apartments_stat_rented(), value: `${rentedCount} / ${data.apartments.length}` }, { label: m.apartments_stat_income(), value: `${formatAmount(income)} ₴` }] as stat (stat.label)}
 			<div class="rounded-card border border-line bg-surface px-4 py-2.5">
 				<p class="text-xs text-ink-muted">{stat.label}</p>
-				<p class="font-mono text-xl font-bold tracking-tight tabular-nums">{stat.value}</p>
+				<p class=" text-xl font-bold tracking-tight tabular-nums">{stat.value}</p>
 			</div>
 		{/each}
 	</div>
@@ -282,7 +282,7 @@
 						<div class="mt-auto flex items-end justify-between gap-3">
 							<div>
 								<p class="text-[11px] text-ink-muted">{m.apt_rent_label()}</p>
-								<p class="font-mono text-lg font-bold tracking-tight tabular-nums">
+								<p class=" text-lg font-bold tracking-tight tabular-nums">
 									{formatAmount(apartment.rentAmount)}
 									<span class="text-xs font-semibold text-ink-muted">{m.apt_per_month()}</span>
 								</p>

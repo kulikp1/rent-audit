@@ -124,7 +124,7 @@
 									defaultValue={iban}
 									oninput={(event) => (iban = event.currentTarget.value)}
 									placeholder="UA00 0000 0000 0000 0000 0000 00000"
-									class="font-mono tracking-wide uppercase"
+									class=" tracking-wide uppercase"
 									{...field}
 								/>
 								{#if ibanState === 'valid'}
@@ -147,7 +147,7 @@
 									defaultValue={values?.taxId ?? data.profile.taxId}
 									inputmode="numeric"
 									maxlength={10}
-									class="font-mono"
+									class=""
 									{...field}
 								/>
 							{/snippet}
@@ -182,7 +182,7 @@
 								<p class="text-white/70">{m.settings_preview_recipient()}</p>
 								<p class="mt-0.5 text-[13px] font-semibold">{fullName || '—'}</p>
 								<p class="mt-2 text-white/70">IBAN</p>
-								<p class="mt-0.5 font-mono text-[11px] tracking-wide break-all">
+								<p class="mt-0.5 text-[11px] tracking-wide break-all">
 									{groupedIban || '—'}
 								</p>
 							</div>
