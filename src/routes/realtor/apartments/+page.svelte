@@ -68,8 +68,8 @@
 
 	const filters = $derived([
 		{ value: 'all' as const, label: m.apt_filter_all_short(), count: data.apartments.length },
-		{ value: 'rented' as const, label: m.status_rented(), count: rentedCount },
-		{ value: 'free' as const, label: m.status_free(), count: freeCount }
+		{ value: 'rented' as const, label: m.apt_filter_rented(), count: rentedCount },
+		{ value: 'free' as const, label: m.apt_filter_free(), count: freeCount }
 	]);
 
 	const intlLocale = $derived(getLocale() === 'uk' ? 'uk-UA' : 'en-GB');

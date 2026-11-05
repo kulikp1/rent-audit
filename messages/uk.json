@@ -111,6 +111,8 @@
 	"apartments_stat_rented": "Зданих",
 	"apartments_stat_income": "Дохід з оренди / міс",
 	"apt_filter_all_short": "Усі",
+	"apt_filter_rented": "Здані",
+	"apt_filter_free": "Вільні",
 	"apt_tenant_label": "Орендар",
 	"apt_no_tenant_yet": "Орендаря ще немає",
 	"apt_no_address": "Адресу не вказано",

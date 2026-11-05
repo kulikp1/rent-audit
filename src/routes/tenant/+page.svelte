@@ -22,8 +22,7 @@
 	import Button from '#lib/components/ui/Button.svelte';
 	import Card from '#lib/components/ui/Card.svelte';
 	import EmptyState from '#lib/components/ui/EmptyState.svelte';
-	import PageHeader from '#lib/components/ui/PageHeader.svelte';
-	import { formatDate, formatMoney, formatPeriod, formatReading } from '#lib/utils/format.js';
+	import { formatMoney, formatPeriod, formatReading } from '#lib/utils/format.js';
 	import { typeLabel, unitLabel } from '#lib/utils/invoice.js';
 	import type { PageProps } from './$types';
 

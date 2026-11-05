@@ -111,6 +111,8 @@
 	"apartments_stat_rented": "Rented",
 	"apartments_stat_income": "Rental income / mo",
 	"apt_filter_all_short": "All",
+	"apt_filter_rented": "Rented",
+	"apt_filter_free": "Vacant",
 	"apt_tenant_label": "Tenant",
 	"apt_no_tenant_yet": "No tenant yet",
 	"apt_no_address": "No address provided",

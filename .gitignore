@@ -35,3 +35,4 @@ experiment/expected.csv
 experiment/results.json
 experiment/report.csv
 .env*
+docs/diploma-screenshots.md

@@ -20,7 +20,7 @@
 		const total = INTERVAL_MS * steps.length;
 		const start = performance.now();
 		let frame = requestAnimationFrame(function tick(now) {
-			progress = (((now - start) % total) / total) * 100;
+			progress = ((Math.max(0, now - start) % total) / total) * 100;
 			frame = requestAnimationFrame(tick);
 		});
 		return () => cancelAnimationFrame(frame);

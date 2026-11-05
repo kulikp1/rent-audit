@@ -12,7 +12,7 @@
 	import EmptyState from '#lib/components/ui/EmptyState.svelte';
 	import PageHeader from '#lib/components/ui/PageHeader.svelte';
 	import { postAction } from '#lib/utils/actions.js';
-	import { formatDate, formatMoney, formatPeriod } from '#lib/utils/format.js';
+	import { formatMoney, formatPeriod } from '#lib/utils/format.js';
 	import { statusLabel, statusTone, typeLabel } from '#lib/utils/invoice.js';
 	import type { PageProps } from './$types';
 
@@ -76,7 +76,7 @@
 				<span class=" font-bold text-ink">{formatMoney(openTotal)}</span>
 			</p>
 		</div>
-		<div class="grid gap-3 md:grid-cols-2">
+		<div class="grid grid-cols-[minmax(0,1fr)] gap-3 md:grid-cols-2">
 			{#each open as invoice (invoice.id)}
 				{@const overdue = invoice.status === 'overdue'}
 				<div
